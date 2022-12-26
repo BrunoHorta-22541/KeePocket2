@@ -53,9 +53,29 @@ public class LoginFragment extends Fragment {
             //acessar a home fragment se a sessao persistir
             navController.navigate(R.id.action_loginFragment_to_homeFragment);
         }
+        login.setOnClickListener(root -> {
+        String email = this.editTextEmail.getText().toString();
+        String password = this.editTextPassword.getText().toString();
 
+        if (email.isEmpty()) {
+            Toast.makeText(getActivity(), "Email cannot be empty!", Toast.LENGTH_LONG).show();
+        }
+        if (password.isEmpty()) {
+            Toast.makeText(getActivity(), "Password cannot be empty!", Toast.LENGTH_LONG).show();
+        }
+        User loggedInUser = LoginManager.validateUser(email, password);
+        if (loggedInUser != null) {
+            SessionManager.saveSession(getActivity(), email, checkBoxRemeberMe.isChecked(), loggedInUser.getId());
+            Toast.makeText(getActivity(), "Login com sucesso", Toast.LENGTH_LONG).show();
+                NavDirections action =
+                        LoginFragmentDirections.actionLoginFragmentToHomeFragment();
 
+                navController.navigate(action);
 
+        } else {
+            Toast.makeText(getActivity(), "Credenciais inválidas", Toast.LENGTH_LONG).show();
+        }
+        });
         return root;
     }
 
