@@ -81,11 +81,11 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.logout:
                 // código do logout
-                /*
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-                builder.setTitle("Delete Category?");
-                builder.setMessage("Do you really want to delete this Category?");
+                builder.setTitle("Logout?");
+                builder.setMessage("Do you really want to Logout?");
 
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
@@ -93,20 +93,18 @@ public class MainActivity extends AppCompatActivity {
                         // Código a ser executado quando o utilizador clica em Cancel
                     }
                 });
-                builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         // Código a ser executado quando o utilizador clica em Delete
-                        Category category = Database.getInstance(CategoryActivity.this).getcategoryDAO().getById(categoryId);
-                        Database.getInstance(CategoryActivity.this).getcategoryDAO().delete(category);
-                        CategoryActivity.this.updateCategoryList();
+                        MainActivity.this.logout();
                     }
                 });
 
                 AlertDialog dialog = builder.create();
                 dialog.show();
-                this.logout();
-                 */
+
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
