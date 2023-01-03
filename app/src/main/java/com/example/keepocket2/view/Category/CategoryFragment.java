@@ -29,14 +29,16 @@ public class CategoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_category, container, false);
-        /*
-        RecyclerView recyclerView = root.findViewById(R.id.);
+/*
+        RecyclerView recyclerView = root.findViewById(R.id.categoryRecyclerView);
         this.adapter = new CategoryAdapter(this);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
 
-         */
+
+ */
+
         return root;
     }
 }

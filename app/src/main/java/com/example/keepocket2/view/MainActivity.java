@@ -11,11 +11,11 @@ import androidx.navigation.ui.NavigationUI;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.example.keepocket2.R;
-import com.example.keepocket2.data.User;
 import com.example.keepocket2.view.Session.SessionManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
     }
+
     public void logout() {
         SessionManager.clearSession(this);
         LoginActivity.startActivity(this);
@@ -65,4 +66,24 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_activity_menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+
+            case R.id.logout:
+                // código do logout
+                this.logout();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 }

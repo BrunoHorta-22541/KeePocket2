@@ -11,8 +11,17 @@
         android:icon="@drawable/categoryicon"
         android:title="Category" />
     <item
-        android:id="@+id/settingsFragment"
+        android:id="@+id/incomeFragment"
         android:icon="@drawable/incomeicon"
-        android:title="Settings" />
+        android:title="Income" />
+    <item
+        android:id="@+id/extenseFragment"
+        android:icon="@drawable/expensesicon"
+        android:title="Extense" />
+    <item
+        android:id="@+id/limitFragment"
+        android:icon="@drawable/limiticon"
+        android:title="Limit" />
+
 
 </menu>

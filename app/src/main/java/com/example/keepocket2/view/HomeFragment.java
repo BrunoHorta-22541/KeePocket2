@@ -10,14 +10,18 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
 import com.example.keepocket2.R;
+import com.example.keepocket2.data.User;
 import com.example.keepocket2.view.Session.SessionManager;
 
 public class HomeFragment extends Fragment {
-
+private TextView textView;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
     }
 
@@ -26,6 +30,9 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         //Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_home, container, false);
+        User activeSession = SessionManager.getActiveSession(getContext());
+        textView = root.findViewById(R.id.textViewUsername);
+        textView.setText(activeSession.getEmail());
         return root;
     }
 }
