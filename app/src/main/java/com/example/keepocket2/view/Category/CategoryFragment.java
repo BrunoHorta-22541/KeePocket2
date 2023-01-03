@@ -1,8 +1,14 @@
 package com.example.keepocket2.view.Category;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,12 +17,20 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.keepocket2.R;
+import com.example.keepocket2.data.Category;
+import com.example.keepocket2.data.User;
+import com.example.keepocket2.data.localDatabase.Database;
+import com.example.keepocket2.view.HomeFragmentDirections;
+import com.example.keepocket2.view.Session.SessionManager;
+
+import java.util.List;
 
 
-public class CategoryFragment extends Fragment {
+public class CategoryFragment extends Fragment implements CategoryAdapter.CategoryAdapterEventListener{
     private View root;
     private CategoryAdapter adapter;
-
+    private long userId;
+    private NavController navController;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,16 +43,56 @@ public class CategoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_category, container, false);
-/*
+         navController = NavHostFragment.findNavController(CategoryFragment.this);
         RecyclerView recyclerView = root.findViewById(R.id.categoryRecyclerView);
         this.adapter = new CategoryAdapter(this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
+        this.updateCategoryList();
 
-
- */
 
         return root;
+    }
+
+    public void updateCategoryList(){
+
+        User activeSession = SessionManager.getActiveSession(getContext());
+        userId = activeSession.getId();
+        List<Category> categoryList = Database.getInstance(getContext()).getcategoryDAO().getUserCategory(userId);
+        this.adapter.updateCategoryList(categoryList);
+    }
+
+    @Override
+    public void onCategoryClicked(long categoryId) {
+        NavDirections action = CategoryFragmentDirections.actionCategoryFragmentToCategoryDetailsFragment(categoryId);
+        navController.navigate(action);
+    }
+
+    @Override
+    public void onCategoryLongClicked(long categoryId) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+        builder.setTitle("Delete Category?");
+        builder.setMessage("Do you really want to delete this Category?");
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // Código a ser executado quando o utilizador clica em Cancel
+            }
+        });
+        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // Código a ser executado quando o utilizador clica em Delete
+                Category category = Database.getInstance(CategoryFragment.this.getContext()).getcategoryDAO().getById(categoryId);
+                Database.getInstance(CategoryFragment.this.getContext()).getcategoryDAO().delete(category);
+                CategoryFragment.this.updateCategoryList();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }
