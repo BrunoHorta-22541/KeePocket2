@@ -1,6 +1,8 @@
 package com.example.keepocket2.view.Session;
 
 
+import com.example.keepocket2.data.User;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,7 +26,7 @@ public class LoginManager {
         return users;
     }
 
-    public static com.example.keepocket2.data.User validateUser(String username, String password) {
+    public static User validateUser(String username, String password) {
         com.example.keepocket2.data.User user = getUsers().get(username);
         if (user == null) return null;
         return user.getPassword().equals(password) ? user : null;

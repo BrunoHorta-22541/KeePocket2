@@ -28,12 +28,15 @@ public class CategoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        root = inflater.inflate(R.layout.fragment_login, container, false);
+        root = inflater.inflate(R.layout.fragment_category, container, false);
+        /*
         RecyclerView recyclerView = root.findViewById(R.id.);
         this.adapter = new CategoryAdapter(this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
+
+         */
         return root;
     }
 }
