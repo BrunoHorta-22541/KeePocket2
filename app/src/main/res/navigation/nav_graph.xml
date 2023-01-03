@@ -21,12 +21,33 @@
         <action
             android:id="@+id/action_categoryFragment_to_categoryDetailsFragment"
             app:destination="@id/categoryDetailsFragment" />
+        <action
+            android:id="@+id/action_categoryFragment_to_addCategoryFragment"
+            app:destination="@id/addCategoryFragment" />
     </fragment>
     <fragment
         android:id="@+id/categoryDetailsFragment"
         android:name="com.example.keepocket2.view.Category.CategoryDetailsFragment"
         android:label="fragment_category_details"
         tools:layout="@layout/fragment_category_details" >
+        <argument
+            android:name="Id"
+            app:argType="long" />
+        <argument
+            android:name="categoryId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_categoryDetailsFragment_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addCategoryFragment"
+        android:name="com.example.keepocket2.view.Category.AddCategoryFragment"
+        android:label="fragment_add_category"
+        tools:layout="@layout/fragment_add_category" >
+        <action
+            android:id="@+id/action_addCategoryFragment_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
         <argument
             android:name="Id"
             app:argType="long" />

@@ -74,6 +74,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     public interface CategoryAdapterEventListener {
         void onCategoryClicked(long categoryId);
 
-        void onCategoryLongClicked(long chatsId);
+        void onCategoryLongClicked(long categoryId);
     }
 }

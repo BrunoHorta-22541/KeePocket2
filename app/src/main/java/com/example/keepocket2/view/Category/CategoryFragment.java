@@ -23,6 +23,7 @@ import com.example.keepocket2.data.User;
 import com.example.keepocket2.data.localDatabase.Database;
 import com.example.keepocket2.view.HomeFragmentDirections;
 import com.example.keepocket2.view.Session.SessionManager;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class CategoryFragment extends Fragment implements CategoryAdapter.Catego
     private CategoryAdapter adapter;
     private long userId;
     private NavController navController;
-    private Button addCategory;
+    private FloatingActionButton addCategory;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,7 +55,8 @@ public class CategoryFragment extends Fragment implements CategoryAdapter.Catego
         this.updateCategoryList();
         addCategory=root.findViewById(R.id.floatingActionButton2);
         addCategory.setOnClickListener(view->{
-
+            NavDirections action= CategoryFragmentDirections.actionCategoryFragmentToAddCategoryFragment(userId);
+            navController.navigate(action);
         });
         return root;
     }
@@ -69,7 +71,7 @@ public class CategoryFragment extends Fragment implements CategoryAdapter.Catego
 
     @Override
     public void onCategoryClicked(long categoryId) {
-        NavDirections action = CategoryFragmentDirections.actionCategoryFragmentToCategoryDetailsFragment(categoryId);
+        NavDirections action = CategoryFragmentDirections.actionCategoryFragmentToCategoryDetailsFragment(userId,categoryId);
         navController.navigate(action);
     }
 
