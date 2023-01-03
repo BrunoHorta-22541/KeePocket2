@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.keepocket2.R;
 import com.example.keepocket2.data.Category;
@@ -31,6 +32,7 @@ public class CategoryFragment extends Fragment implements CategoryAdapter.Catego
     private CategoryAdapter adapter;
     private long userId;
     private NavController navController;
+    private Button addCategory;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,8 +52,10 @@ public class CategoryFragment extends Fragment implements CategoryAdapter.Catego
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
         this.updateCategoryList();
+        addCategory=root.findViewById(R.id.floatingActionButton2);
+        addCategory.setOnClickListener(view->{
 
-
+        });
         return root;
     }
 
@@ -95,4 +99,6 @@ public class CategoryFragment extends Fragment implements CategoryAdapter.Catego
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
+
 }
