@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.keepocket2.R;
 import com.example.keepocket2.data.Category;
@@ -19,6 +20,8 @@ import com.example.keepocket2.data.User;
 import com.example.keepocket2.data.localDatabase.Database;
 import com.example.keepocket2.view.Session.SessionManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.List;
 
 
 public class AddCategoryFragment extends Fragment {
@@ -45,11 +48,12 @@ public class AddCategoryFragment extends Fragment {
             userId = activeSession.getId();
             String nameCategory = this.editTextCategoryName.getText().toString();
 
-            Category category = new Category(0,nameCategory,0,userId);
-            Database.getInstance(getContext()).getcategoryDAO().insert(category);
+                Category categoryinsert = new Category(0,nameCategory,0,userId);
+                Database.getInstance(getContext()).getcategoryDAO().insert(categoryinsert);
 
-            NavDirections action = AddCategoryFragmentDirections.actionAddCategoryFragmentToCategoryFragment();
-            navController.navigate(action);
+                NavDirections action = AddCategoryFragmentDirections.actionAddCategoryFragmentToCategoryFragment();
+                navController.navigate(action);
+            ;
         });
 
 

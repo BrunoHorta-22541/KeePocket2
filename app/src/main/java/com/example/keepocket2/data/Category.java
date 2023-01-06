@@ -1,6 +1,7 @@
 package com.example.keepocket2.data;
 
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 @Entity

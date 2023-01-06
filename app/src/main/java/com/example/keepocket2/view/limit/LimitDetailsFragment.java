@@ -44,15 +44,15 @@ public class LimitDetailsFragment extends Fragment {
         LimitDetailsFragmentArgs args = LimitDetailsFragmentArgs.fromBundle(getArguments());
         NavController  navController = NavHostFragment.findNavController(LimitDetailsFragment.this);
         idCategory = args.getCategoryId();
-        Category category = Database.getInstance(getContext()).getcategoryDAO().getById(idCategory);
+        this.categoryList = Database.getInstance(getContext()).getcategoryDAO().getById(limitId);
         User activeSession = SessionManager.getActiveSession(getContext());
         userId = activeSession.getId();
         valueLimit = root.findViewById(R.id.editTextLimitDetailsValue);
-        this.valueLimit.setText(category.getLimit());
+        this.valueLimit.setText(categoryList.getLimit());
         edit= root.findViewById(R.id.button5);
         edit.setOnClickListener(view->{
             String limitValueString = this.valueLimit.getText().toString();
-            String nameCategory = category.getCategoryName();
+            String nameCategory = categoryList.getCategoryName();
             int categoryLimit = Integer.parseInt(limitValueString);
 
             Category categoryedit = new Category(idCategory, nameCategory, categoryLimit, userId);
