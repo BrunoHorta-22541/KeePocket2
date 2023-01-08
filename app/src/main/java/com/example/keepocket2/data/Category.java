@@ -11,12 +11,14 @@ public class Category {
     private long idUser;
     private String categoryName;
     private int limit;
+    private int income;
 
     public Category(long idCategory, String categoryName, int limit, long idUser){
         this.idCategory = idCategory;
         this.categoryName = categoryName;
         this.limit = limit;
-        this.idUser= idUser;
+        this.idUser = idUser;
+        this.income = income;
     }
 
     public long getIdCategory() {
@@ -34,4 +36,8 @@ public class Category {
     public long getIdUser() {
         return idUser;
     }
+
+    public int getIncome() { return income; }
+
+
 }

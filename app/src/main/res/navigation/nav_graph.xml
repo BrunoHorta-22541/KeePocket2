@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_homeFragment_to_limitFragment2"
             app:destination="@id/limitFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_incomeFragment2"
+            app:destination="@id/incomeFragment2" />
     </fragment>
     <fragment
         android:id="@+id/categoryFragment"
@@ -93,5 +96,41 @@
         <argument
             android:name="categoryId"
             app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/addIncomeFragment"
+        android:name="com.example.keepocket2.view.Income.AddIncomeFragment"
+        android:label="fragment_add_income"
+        tools:layout="@layout/fragment_add_income" >
+        <action
+            android:id="@+id/action_addIncomeFragment_to_incomeFragment2"
+            app:destination="@id/incomeFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/incomeDetailsFragment"
+        android:name="com.example.keepocket2.view.Income.IncomeDetailsFragment"
+        android:label="fragment_income_details"
+        tools:layout="@layout/fragment_income_details" >
+        <action
+            android:id="@+id/action_incomeDetailsFragment_to_incomeFragment2"
+            app:destination="@id/incomeFragment2" />
+        <argument
+            android:name="id"
+            app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/incomeFragment2"
+        android:name="com.example.keepocket2.view.Income.IncomeFragment"
+        android:label="fragment_income"
+        tools:layout="@layout/fragment_income" >
+        <action
+            android:id="@+id/action_incomeFragment2_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_incomeFragment2_to_addIncomeFragment"
+            app:destination="@id/addIncomeFragment" />
+        <action
+            android:id="@+id/action_incomeFragment2_to_incomeDetailsFragment"
+            app:destination="@id/incomeDetailsFragment" />
     </fragment>
 </navigation>

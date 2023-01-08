@@ -39,4 +39,6 @@ public interface CategoryDAO {
 
     @Insert
     void insert(Category category);
+
+    List<Category> getUserCategoryIncome(long userId);
 }
