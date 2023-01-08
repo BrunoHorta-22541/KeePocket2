@@ -29,7 +29,6 @@ public interface CategoryDAO {
     @Query("SELECT * FROM Category WHERE idUser = :userId AND `limit` > 0 ")
     List<Category> getUserCategoryLimit(long userId);
 
-
     @Delete
     void delete(Category category);
 
