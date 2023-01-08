@@ -68,7 +68,7 @@ public class IncomeDetailsFragment extends Fragment implements AdapterView.OnIte
         this.valueIncome.setText(category.getIncome());
         descriptionIncome = root.findViewById(R.id.editTextIncomeDescriptionDetails);
         this.descriptionIncome.setText(category.getIncome());
-        spinner = root.findViewById(R.id.incomeDetailsCategorySpinner);
+        this.spinner = root.findViewById(R.id.incomeDetailsCategorySpinner);
         spinnerAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, new ArrayList<String>());
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(spinnerAdapter);
