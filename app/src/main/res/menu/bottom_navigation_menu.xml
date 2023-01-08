@@ -11,7 +11,7 @@
         android:icon="@drawable/categoryicon"
         android:title="Category" />
     <item
-        android:id="@+id/incomeFragment"
+        android:id="@+id/incomeFragment2"
         android:icon="@drawable/incomeicon"
         android:title="Income" />
     <item

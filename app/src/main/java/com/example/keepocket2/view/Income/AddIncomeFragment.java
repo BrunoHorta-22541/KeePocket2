@@ -19,8 +19,10 @@ import android.widget.Toast;
 
 import com.example.keepocket2.R;
 import com.example.keepocket2.data.Category;
+import com.example.keepocket2.data.Movement;
 import com.example.keepocket2.data.User;
 import com.example.keepocket2.data.localDatabase.Database;
+import com.example.keepocket2.view.Session.SessionManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +51,7 @@ public class AddIncomeFragment extends Fragment implements AdapterView.OnItemSel
         // Inflate the layout for this fragment
         View root= inflater.inflate(R.layout.fragment_add_income, container, false);
         NavController navController = NavHostFragment.findNavController(com.example.keepocket2.view.Income.AddIncomeFragment.this);
+        User activeSession = SessionManager.getActiveSession(getContext());
         userId = activeSession.getId();
         this.editTextDescription = root.findViewById(R.id.editTextIncomeDescription);
         this.spinnerIncome = root.findViewById(R.id.incomeCategorySpinner);
@@ -62,13 +65,14 @@ public class AddIncomeFragment extends Fragment implements AdapterView.OnItemSel
         spinnerIncome.setOnItemSelectedListener(this);
         save = root.findViewById(R.id.button4);
         save.setOnClickListener(view->{
-            String incomeValueString = this.editTextDescription.getText().toString();
-            int incomeValueInt = Integer.parseInt(incomeValueString);
+            String description = this.editTextDescription.getText().toString();
+            String valueIncomeString = this.editTextValue.getText().toString();
+            int valueIncomeInt = Integer.parseInt(valueIncomeString);
+            Category category = Database.getInstance(getContext()).getcategoryDAO().getCategoryByName(userId, itemSelected);
 
-            Category category = Database.getInstance(getContext()).getcategoryDAO().getCategoryByName(userId,itemSelected);
+            Movement movements = new Movement(0, userId, category.getIdCategory(), valueIncomeInt, description, System.currentTimeMillis());
+            Database.getInstance(getContext()).getmovementsDAO().insert(movements);
 
-            Category categoryUpdate = new Category(category.getIdCategory(),category.getCategoryName(),incomeValueInt,userId);
-            Database.getInstance(getContext()).getcategoryDAO().update(categoryUpdate);
             NavDirections action= AddIncomeFragmentDirections.actionAddIncomeFragmentToIncomeFragment2();
             navController.navigate(action);
         });
@@ -90,4 +94,5 @@ public class AddIncomeFragment extends Fragment implements AdapterView.OnItemSel
     public void onNothingSelected(AdapterView<?> adapterView) {
         Toast.makeText(getContext(), "Nenhum item selecionado", Toast.LENGTH_SHORT).show();
     }
+
 }

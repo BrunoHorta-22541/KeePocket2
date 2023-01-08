@@ -54,12 +54,12 @@ public class IncomeFragment extends Fragment implements IncomeAdapter.IncomeAdap
             NavDirections action = IncomeFragmentDirections.actionIncomeFragment2ToAddIncomeFragment();
             navController.navigate(action);
         });
-        this.updateCategoryList();
+        this.updateIncomeList();
 
         return root;
     }
 
-    public void updateCategoryList(){
+    public void updateIncomeList(){
         User activeSession = SessionManager.getActiveSession(getContext());
         userId = activeSession.getId();
         List<Movement> movementsList = Database.getInstance(getContext()).getmovementsDAO().getIncome(this.userId);
@@ -68,17 +68,17 @@ public class IncomeFragment extends Fragment implements IncomeAdapter.IncomeAdap
     }
 
     @Override
-    public void onIncomeClicked(long categoryId) {
-        NavDirections action = IncomeFragmentDirections.actionIncomeFragment2ToAddIncomeFragment();
+    public void onIncomeClicked(long movementId) {
+        NavDirections action = IncomeFragmentDirections.actionIncomeFragment2ToIncomeDetailsFragment(movementId);
         navController.navigate(action);
     }
 
     @Override
-    public void onIncomeLongClicked(long categoryId) {
+    public void onIncomeLongClicked(long movementId) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
         builder.setTitle("Delete Limit?");
-        builder.setMessage("Do you really want to delete this Limit?");
+        builder.setMessage("Do you really want to delete this Income?");
 
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
@@ -90,10 +90,9 @@ public class IncomeFragment extends Fragment implements IncomeAdapter.IncomeAdap
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 // Código a ser executado quando o utilizador clica em Delete
-                Category categoryname = Database.getInstance(IncomeFragment.this.getContext()).getcategoryDAO().getById(categoryId);
-                Category category = new Category(categoryId,categoryname.getCategoryName(),0,userId);
-                Database.getInstance(IncomeFragment.this.getContext()).getcategoryDAO().update(category);
-                IncomeFragment.this.updateCategoryList();
+                Movement movements = Database.getInstance(getContext()).getmovementsDAO().getById(movementId);
+                Database.getInstance(getContext()).getmovementsDAO().delete(movements);
+                IncomeFragment.this.updateIncomeList();
             }
         });
 

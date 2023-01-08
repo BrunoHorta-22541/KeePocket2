@@ -1,6 +1,5 @@
 package com.example.keepocket2.view.Income;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -16,17 +15,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.keepocket2.R;
 import com.example.keepocket2.data.Category;
+import com.example.keepocket2.data.Movement;
 import com.example.keepocket2.data.User;
 import com.example.keepocket2.data.localDatabase.Database;
 import com.example.keepocket2.view.Session.SessionManager;
-import com.example.keepocket2.view.limit.LimitDetailsFragmentArgs;
-import com.example.keepocket2.view.limit.LimitDetailsFragmentDirections;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +30,6 @@ import java.util.List;
 
 public class IncomeDetailsFragment extends Fragment implements AdapterView.OnItemSelectedListener {
     private List<String> categoryList;
-    private long incomeMovementId;
     private long userId;
     private EditText descriptionIncome;
     private EditText valueIncome;
@@ -44,9 +39,10 @@ public class IncomeDetailsFragment extends Fragment implements AdapterView.OnIte
     private String spinnerStringValue;
     ArrayAdapter<String> spinnerAdapter;
     private long originalInsertDate;
-    private  long idCategory;
+    private  long idincome;
     private Button edit;
     private long incomeId;
+    private Movement movement;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,17 +54,27 @@ public class IncomeDetailsFragment extends Fragment implements AdapterView.OnIte
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_income_details, container, false);
+
         IncomeDetailsFragmentArgs args = IncomeDetailsFragmentArgs.fromBundle(getArguments());
         NavController  navController = NavHostFragment.findNavController(IncomeDetailsFragment.this);
-        idCategory = args.getId();
-        Category category = Database.getInstance(getContext()).getcategoryDAO().getById(idCategory);
+        idincome = args.getId();
         User activeSession = SessionManager.getActiveSession(getContext());
-        userId = activeSession.getId();
-        valueIncome = root.findViewById(R.id.editTextIncomeDetailsValue);
-        this.valueIncome.setText(category.getIncome());
         descriptionIncome = root.findViewById(R.id.editTextIncomeDescriptionDetails);
-        this.descriptionIncome.setText(category.getIncome());
+        valueIncome = root.findViewById(R.id.editTextIncomeDetailsValue);
         this.spinner = root.findViewById(R.id.incomeDetailsCategorySpinner);
+
+        userId = activeSession.getId();
+        categoryList = Database.getInstance(getContext()).getcategoryDAO().getUserCategoryName(userId);
+        movement = Database.getInstance(getContext()).getmovementsDAO().getById(idincome);
+        categoryId = movement.getIdCategory();
+        Category category = Database.getInstance(getContext()).getcategoryDAO().getById(categoryId);
+        spinnerStringValue = category.getCategoryName();
+        this.descriptionIncome.setText(movement.getDescription());
+        this.valueIncome.setText(Integer.toString(movement.getValue()));
+        this.originalInsertDate = movement.getMovementsDate();
+
+
+
         spinnerAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, new ArrayList<String>());
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(spinnerAdapter);
@@ -78,14 +84,16 @@ public class IncomeDetailsFragment extends Fragment implements AdapterView.OnIte
         spinner.setOnItemSelectedListener(this);
         edit= root.findViewById(R.id.button5);
         edit.setOnClickListener(view->{
-            String incomeValueString = this.valueIncome.getText().toString();
-            String nameCategory = category.getCategoryName();
-            int categoryIncome = Integer.parseInt(incomeValueString);
+            String description = this.descriptionIncome.getText().toString();
+            String valueExpenseString = this.valueIncome.getText().toString();
+            int valueExpenseInt = Integer.parseInt(valueExpenseString);
+            Category category2 = Database.getInstance(getContext()).getcategoryDAO().getCategoryByName(userId, itemSelected);
+            Movement movements = new Movement(this.movement.getIdMovement(), userId, category2.getIdCategory(),valueExpenseInt, description, originalInsertDate);
+            Database.getInstance(getContext()).getmovementsDAO().update(movements);
 
-            Category categoryedit = new Category(idCategory, nameCategory, categoryIncome, userId);
-            Database.getInstance(getContext()).getcategoryDAO().update(categoryedit);
-            NavDirections action = LimitDetailsFragmentDirections.actionLimitDetailsFragmentToLimitFragment2();
+            NavDirections action= IncomeDetailsFragmentDirections.actionIncomeDetailsFragmentToIncomeFragment2();
             navController.navigate(action);
+
         });
         return root;
     }
