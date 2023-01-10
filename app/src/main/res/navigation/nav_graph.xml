@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_homeFragment_to_incomeFragment2"
             app:destination="@id/incomeFragment2" />
+        <action
+            android:id="@+id/action_homeFragment_to_expenseFragment"
+            app:destination="@id/expenseFragment" />
     </fragment>
     <fragment
         android:id="@+id/categoryFragment"
@@ -132,5 +135,38 @@
         <action
             android:id="@+id/action_incomeFragment2_to_incomeDetailsFragment"
             app:destination="@id/incomeDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/expenseFragment"
+        android:name="com.example.keepocket2.view.Expense.ExpenseFragment"
+        android:label="fragment_expense"
+        tools:layout="@layout/fragment_expense" >
+        <action
+            android:id="@+id/action_expenseFragment_to_addExpenseFragment"
+            app:destination="@id/addExpenseFragment" />
+        <action
+            android:id="@+id/action_expenseFragment_to_espenseFragmentDetails"
+            app:destination="@id/espenseFragmentDetails" />
+    </fragment>
+    <fragment
+        android:id="@+id/addExpenseFragment"
+        android:name="com.example.keepocket2.view.Expense.AddExpenseFragment"
+        android:label="fragment_add_expense"
+        tools:layout="@layout/fragment_add_expense" >
+        <action
+            android:id="@+id/action_addExpenseFragment_to_expenseFragment"
+            app:destination="@id/expenseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/espenseFragmentDetails"
+        android:name="com.example.keepocket2.view.Expense.EspenseFragmentDetails"
+        android:label="fragment_espense_details"
+        tools:layout="@layout/fragment_espense_details" >
+        <argument
+            android:name="movementId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_espenseFragmentDetails_to_expenseFragment"
+            app:destination="@id/expenseFragment" />
     </fragment>
 </navigation>

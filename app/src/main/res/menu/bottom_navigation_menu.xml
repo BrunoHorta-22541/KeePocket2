@@ -15,7 +15,7 @@
         android:icon="@drawable/incomeicon"
         android:title="Income" />
     <item
-        android:id="@+id/extenseFragment"
+        android:id="@+id/expenseFragment"
         android:icon="@drawable/expensesicon"
         android:title="Extense" />
     <item
