@@ -67,7 +67,7 @@ public class AddLimitFragment extends Fragment implements AdapterView.OnItemSele
             Category category = Database.getInstance(getContext()).getcategoryDAO().getCategoryByName(userId,itemSelected);
 
             Category categoryUpdate = new Category(category.getIdCategory(),category.getCategoryName(),limitValueInt,userId);
-            Database.getInstance(getContext()).getcategoryDAO().update(categoryUpdate);
+            Database.getInstance(getContext()).getcategoryDAO().updateCategory(categoryUpdate);
             NavDirections action= AddLimitFragmentDirections.actionAddLimitFragmentToLimitFragment2();
             navController.navigate(action);
         });

@@ -56,7 +56,7 @@ public class LimitDetailsFragment extends Fragment {
             int categoryLimit = Integer.parseInt(limitValueString);
 
             Category categoryedit = new Category(idCategory, nameCategory, categoryLimit, userId);
-            Database.getInstance(getContext()).getcategoryDAO().update(categoryedit);
+            Database.getInstance(getContext()).getcategoryDAO().updateCategory(categoryedit);
             NavDirections action = LimitDetailsFragmentDirections.actionLimitDetailsFragmentToLimitFragment2();
             navController.navigate(action);
         });

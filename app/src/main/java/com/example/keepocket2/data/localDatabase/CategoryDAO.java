@@ -1,8 +1,10 @@
 package com.example.keepocket2.data.localDatabase;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -17,8 +19,11 @@ public interface CategoryDAO {
     @Query("SELECT * FROM Category WHERE idCategory = :categoryId")
     Category getById(long categoryId);
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void createCategorys(List<Category> category);
+
     @Query("SELECT * FROM Category WHERE idUser = :userId")
-    List<Category> getUserCategory(long userId);
+    LiveData<List<Category>> getUserCategory(long userId);
 
     @Query("SELECT categoryName FROM Category WHERE idUser = :userId")
     List<String> getUserCategoryName(long userId);
@@ -33,9 +38,9 @@ public interface CategoryDAO {
     void delete(Category category);
 
     @Update
-    void update(Category category);
+    void updateCategory(Category category);
 
 
     @Insert
-    void insert(Category category);
+    void insertCategory(Category category);
 }

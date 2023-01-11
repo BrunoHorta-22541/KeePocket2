@@ -2,7 +2,10 @@ package com.example.keepocket2.view.Category;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
 import androidx.navigation.fragment.NavHostFragment;
@@ -19,6 +22,7 @@ import com.example.keepocket2.data.Category;
 import com.example.keepocket2.data.User;
 import com.example.keepocket2.data.localDatabase.Database;
 import com.example.keepocket2.view.Session.SessionManager;
+import com.example.keepocket2.viewModel.CategoryViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -29,7 +33,7 @@ public class AddCategoryFragment extends Fragment {
     private EditText editTextCategoryName;
     private long userId;
     private Button save;
-    private FloatingActionButton previous;
+    private CategoryViewModel viewModel;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,25 +43,37 @@ public class AddCategoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-       View root= inflater.inflate(R.layout.fragment_add_category, container, false);
+        View root = inflater.inflate(R.layout.fragment_add_category, container, false);
+        this.viewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
+
+
+
+        return root;
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         NavController navController = NavHostFragment.findNavController(AddCategoryFragment.this);
-        this.editTextCategoryName = root.findViewById(R.id.categoryNameEditText);
-        save = root.findViewById(R.id.button2);
-        save.setOnClickListener(view->{
+        this.editTextCategoryName = view.findViewById(R.id.categoryNameEditText);
+        save = view.findViewById(R.id.button2);
+        save.setOnClickListener(view1-> {
             User activeSession = SessionManager.getActiveSession(getContext());
             userId = activeSession.getId();
             String nameCategory = this.editTextCategoryName.getText().toString();
-
-                Category categoryinsert = new Category(0,nameCategory,0,userId);
-                Database.getInstance(getContext()).getcategoryDAO().insert(categoryinsert);
-
-                NavDirections action = AddCategoryFragmentDirections.actionAddCategoryFragmentToCategoryFragment();
-                navController.navigate(action);
-            ;
+            if (nameCategory.isEmpty()) {
+                // TODO dar erro
+            } else {
+                try{
+                    Category category = new Category(0,nameCategory,0,userId);
+                    this.viewModel.createCategoryApi(category);
+                    NavDirections action = AddCategoryFragmentDirections.actionAddCategoryFragmentToCategoryFragment();
+                    navController.navigate(action);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         });
-
-
-
-       return root;
     }
 }
