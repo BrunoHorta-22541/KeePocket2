@@ -69,7 +69,7 @@ public class IncomeFragment extends Fragment implements IncomeAdapter.IncomeAdap
 
     @Override
     public void onIncomeClicked(long movementId) {
-        NavDirections action = IncomeFragmentDirections.actionIncomeFragment2ToIncomeDetailsFragment(movementId);
+        NavDirections action = IncomeFragmentDirections.actionIncomeFragment2ToIncomeDetailsFragment(movementId,userId);
         navController.navigate(action);
     }
 

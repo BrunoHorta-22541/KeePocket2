@@ -121,6 +121,9 @@
         <argument
             android:name="id"
             app:argType="long" />
+        <argument
+            android:name="userId"
+            app:argType="long" />
     </fragment>
     <fragment
         android:id="@+id/incomeFragment2"

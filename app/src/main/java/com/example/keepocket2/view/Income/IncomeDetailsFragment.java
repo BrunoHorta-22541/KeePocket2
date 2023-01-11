@@ -58,12 +58,10 @@ public class IncomeDetailsFragment extends Fragment implements AdapterView.OnIte
         IncomeDetailsFragmentArgs args = IncomeDetailsFragmentArgs.fromBundle(getArguments());
         NavController  navController = NavHostFragment.findNavController(IncomeDetailsFragment.this);
         idincome = args.getId();
-        User activeSession = SessionManager.getActiveSession(getContext());
         descriptionIncome = root.findViewById(R.id.editTextIncomeDescriptionDetails);
         valueIncome = root.findViewById(R.id.editTextIncomeDetailsValue);
         this.spinner = root.findViewById(R.id.incomeDetailsCategorySpinner);
-
-        userId = activeSession.getId();
+        userId = args.getUserId();
         categoryList = Database.getInstance(getContext()).getcategoryDAO().getUserCategoryName(userId);
         movement = Database.getInstance(getContext()).getmovementsDAO().getById(idincome);
         categoryId = movement.getIdCategory();
