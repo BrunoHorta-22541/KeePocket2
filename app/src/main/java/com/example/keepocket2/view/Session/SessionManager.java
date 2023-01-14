@@ -20,18 +20,20 @@ public class SessionManager {
         return sharedPreferences;
     }
 
-    public static void saveSession(Context context, String username, boolean rememberMe, long userId) {
+    public static void saveSession(Context context, String username, boolean rememberMe, long userId,String password) {
         getSharedPreferences(context)
                 .edit()
                 .putString("username", username)
                 .putLong("userId", userId)
+                .putString("password", password)
                 .putBoolean("rememberMe", rememberMe).apply();
     }
 
     public static User getActiveSession(Context context) {
         String username = getSharedPreferences(context).getString("username", null);
+        String password = getSharedPreferences(context).getString("password", null);
         long userId = getSharedPreferences(context).getLong("userId", 0);
-        return new User(userId,username);
+        return new User(userId,username,password);
     }
 
     public static boolean sessionExists(Context context) {

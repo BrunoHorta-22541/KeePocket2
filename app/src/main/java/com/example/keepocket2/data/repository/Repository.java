@@ -6,9 +6,11 @@ import androidx.lifecycle.LiveData;
 
 import com.example.keepocket2.data.Category;
 import com.example.keepocket2.data.Movement;
+import com.example.keepocket2.data.User;
 import com.example.keepocket2.data.localDatabase.CategoryDAO;
 import com.example.keepocket2.data.localDatabase.Database;
 import com.example.keepocket2.data.localDatabase.MovementDAO;
+import com.example.keepocket2.data.localDatabase.UserDAO;
 import com.example.keepocket2.data.service.CategoryService;
 import com.example.keepocket2.data.service.MovementService;
 
@@ -31,11 +33,13 @@ public class Repository {
 
     private CategoryDAO categoryDAO;
     private MovementDAO movementDAO;
+    private UserDAO userDAO;
     private CategoryService categoryService;
     private MovementService movementService;
     public Repository(Context context){
         this.categoryDAO = Database.getInstance(context).getcategoryDAO();
         this.movementDAO = Database.getInstance(context).getmovementsDAO();
+        this.userDAO = Database.getInstance(context).getuserDAO();
         this.categoryService = retrofit.create(CategoryService.class);
         this.movementService = retrofit.create(MovementService.class);
     }
@@ -55,13 +59,30 @@ public class Repository {
     public LiveData<List<Movement>> getIncomeFromId(long userId){
         return this.movementDAO.getIncome(userId);
     }
+
     public void createCategory(Category category){
      executor.execute(() -> categoryDAO.insertCategory(category));
     }
     public void updateCategory(Category category){
         executor.execute(() -> categoryDAO.updateCategory(category));
     }
-
+    public void createUser(User user){
+        executor.execute(() -> userDAO.insertUser(user));
+    }
+    public String getUserByEmail(String email){
+        executor.execute(()-> userDAO.getByEmail(email));
+        return email;
+    }
+    public LiveData<List<User>> listAllUsers(){
+        return this.userDAO.getAll();
+    }
+    public long userCreated(User user){
+        executor.execute(() -> userDAO.insertedUser(user));
+        return userDAO.insertedUser(user);
+    }
+    public void updateUser(User user){
+        executor.execute(() -> userDAO.updateUser(user));
+    }
     public void refreshCategory() {
         this.categoryService.getCategoryList().enqueue(new Callback<List<Category>>() {
             @Override

@@ -40,12 +40,12 @@ public interface MovementDAO {
 
 
     @Delete
-    void delete(Movement movements);
+    void delete(Movement movement);
 
     @Update
-    void update(Movement movements);
+    void update(Movement movement);
 
 
     @Insert
-    void insert(Movement movements);
+    void insert(Movement movement);
 }

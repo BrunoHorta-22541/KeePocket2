@@ -1,6 +1,12 @@
 package com.example.keepocket2.data;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class User {
+
+    @PrimaryKey(autoGenerate = true)
     private long id;
     private String email;
     private String password;
@@ -12,10 +18,6 @@ public class User {
     }
 
 
-    public User(long id, String email) {
-        this.id = id;
-        this.email = email;
-    }
 
     public long getId() {
         return id;

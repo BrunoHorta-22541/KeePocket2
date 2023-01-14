@@ -17,7 +17,9 @@ import com.example.keepocket2.R;
 import com.example.keepocket2.data.User;
 import com.example.keepocket2.view.Session.LoginManager;
 import com.example.keepocket2.view.Session.SessionManager;
+import com.example.keepocket2.viewmodel.CategoryViewModel;
 
+import androidx.lifecycle.ViewModelProvider;
 public class LoginActivity extends AppCompatActivity {
     private EditText editTextEmail;
     private EditText editTextPassword;
@@ -45,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void thelogin(View view) {
+
         // Código para efetuar login
         String email = this.editTextEmail.getText().toString();
         String password = this.editTextPassword.getText().toString();
@@ -58,11 +61,15 @@ public class LoginActivity extends AppCompatActivity {
         User user = LoginManager.validateUser(email, password);
         if (user != null) {
             // logado
-            SessionManager.saveSession(this, email, checkBoxRemeberMe.isChecked(), user.getId());
+            SessionManager.saveSession(this, email, checkBoxRemeberMe.isChecked(), user.getId(),password);
             MainActivity.startActivity(this);
         } else {
             // mostrar erro
             Toast.makeText(this, "Credenciais inválidas", Toast.LENGTH_LONG).show();
         }
+    }
+
+    public void signuplogin(View view) {
+        SignUp.startActivity(this);
     }
 }
