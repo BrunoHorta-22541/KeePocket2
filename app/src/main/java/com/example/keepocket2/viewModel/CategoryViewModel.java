@@ -1,4 +1,4 @@
-package com.example.keepocket2.viewModel;
+package com.example.keepocket2.viewmodel;
 
 import android.app.Application;
 
@@ -24,6 +24,9 @@ public class CategoryViewModel extends AndroidViewModel {
 
     public LiveData<List<Category>> getCategoryById(long categoryID){
         return this.repository.getCategoryFromId(categoryID);
+    }
+    public Category getCategoryWithID(long categoryID){
+        return this.repository.getCategoryFromCategoryId(categoryID);
     }
 
 

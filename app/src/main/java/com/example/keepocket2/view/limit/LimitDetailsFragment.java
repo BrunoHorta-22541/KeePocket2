@@ -1,8 +1,9 @@
 package com.example.keepocket2.view.limit;
 
 import android.os.Bundle;
-
+import com.example.keepocket2.viewmodel.CategoryViewModel;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
 import androidx.navigation.fragment.NavHostFragment;
@@ -18,6 +19,8 @@ import com.example.keepocket2.R;
 import com.example.keepocket2.data.Category;
 import com.example.keepocket2.data.User;
 import com.example.keepocket2.data.localDatabase.Database;
+import com.example.keepocket2.view.Category.CategoryDetailsFragment;
+import com.example.keepocket2.view.Category.CategoryDetailsFragmentDirections;
 import com.example.keepocket2.view.Session.SessionManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -30,6 +33,7 @@ public class LimitDetailsFragment extends Fragment {
     private  long idCategory;
     private EditText valueLimit;
     private Button edit;
+    private CategoryViewModel viewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,9 +45,11 @@ public class LimitDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_limit_details, container, false);
+        this.viewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
         LimitDetailsFragmentArgs args = LimitDetailsFragmentArgs.fromBundle(getArguments());
         NavController  navController = NavHostFragment.findNavController(LimitDetailsFragment.this);
         idCategory = args.getCategoryId();
+        userId = args.getUserId();
         this.categoryList = Database.getInstance(getContext()).getcategoryDAO().getById(limitId);
         User activeSession = SessionManager.getActiveSession(getContext());
         userId = activeSession.getId();
@@ -54,14 +60,19 @@ public class LimitDetailsFragment extends Fragment {
             String limitValueString = this.valueLimit.getText().toString();
             String nameCategory = categoryList.getCategoryName();
             int categoryLimit = Integer.parseInt(limitValueString);
-
-            Category categoryedit = new Category(idCategory, nameCategory, categoryLimit, userId);
-            Database.getInstance(getContext()).getcategoryDAO().updateCategory(categoryedit);
-            NavDirections action = LimitDetailsFragmentDirections.actionLimitDetailsFragmentToLimitFragment2();
-            navController.navigate(action);
+            if (nameCategory.isEmpty()) {
+                // TODO dar erro
+            } else {
+                try{
+                    Category categoryedit = new Category(idCategory, nameCategory, categoryLimit, userId);
+                    LimitDetailsFragment.this.viewModel.updateCategoryApi(categoryedit);
+                    NavDirections action = CategoryDetailsFragmentDirections.actionCategoryDetailsFragmentToCategoryFragment();
+                    navController.navigate(action);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         });
-
-
         return root;
     }
 }

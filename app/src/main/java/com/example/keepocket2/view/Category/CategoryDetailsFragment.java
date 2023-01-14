@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
@@ -21,15 +22,13 @@ import com.example.keepocket2.data.Category;
 import com.example.keepocket2.data.User;
 import com.example.keepocket2.data.localDatabase.Database;
 import com.example.keepocket2.view.Session.SessionManager;
-import com.example.keepocket2.viewModel.CategoryViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
+import com.example.keepocket2.viewmodel.CategoryViewModel;
 
 public class CategoryDetailsFragment extends Fragment {
     private long userId;
     private TextView categoryName;
     private Button edit;
-    private int categoryLimit;
     private  long idCategory;
     private CategoryViewModel viewModel;
     @Override
@@ -47,7 +46,8 @@ public class CategoryDetailsFragment extends Fragment {
         CategoryDetailsFragmentArgs args = CategoryDetailsFragmentArgs.fromBundle(getArguments());
         NavController  navController = NavHostFragment.findNavController(CategoryDetailsFragment.this);
         idCategory = args.getCategoryId();
-        Category category = Database.getInstance(getContext()).getcategoryDAO().getById(idCategory);
+        Category category =this.viewModel.getCategoryWithID(idCategory);
+      
         userId = args.getId();
         categoryName = root.findViewById(R.id.categoryNameEditText2);
         this.categoryName.setText(category.getCategoryName());
@@ -58,7 +58,7 @@ public class CategoryDetailsFragment extends Fragment {
                 // TODO dar erro
             } else {
                 try{
-                    Category categoryedit = new Category(idCategory, nameCategory, categoryLimit, userId);
+                    Category categoryedit = new Category(idCategory, nameCategory, 0, userId);
                     CategoryDetailsFragment.this.viewModel.updateCategoryApi(categoryedit);
                     NavDirections action = CategoryDetailsFragmentDirections.actionCategoryDetailsFragmentToCategoryFragment();
                     navController.navigate(action);

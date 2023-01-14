@@ -18,11 +18,11 @@ public interface CategoryService {
     Call<List<Category>> getCategoryList();
 
     @POST("Category")
-    Call<Category> createTicket(@Body Category newCategory);
+    Call<Category> createCategory(@Body Category newCategory);
 
     @PUT("Categorys/{categoryId}")
-    Call<Category> updateTicket(@Body Category updatedCategory, @Path("categoryId") int categoryId);
+    Call<Category> updateCategory(@Body Category updatedCategory, @Path("categoryId") int categoryId);
 
     @DELETE("Category/{categoryId}")
-    Call<Category> deleteTicket(@Path("categoryId") int categoryId);
+    Call<Category> deleteCategory(@Path("categoryId") int categoryId);
 }

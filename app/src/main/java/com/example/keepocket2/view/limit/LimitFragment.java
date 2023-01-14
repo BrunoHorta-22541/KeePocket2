@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
 import androidx.navigation.fragment.NavHostFragment;
@@ -14,11 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import com.example.keepocket2.viewmodel.CategoryViewModel;
 import com.example.keepocket2.R;
 import com.example.keepocket2.data.Category;
 import com.example.keepocket2.data.User;
 import com.example.keepocket2.data.localDatabase.Database;
+import com.example.keepocket2.view.Category.CategoryFragment;
 import com.example.keepocket2.view.Session.SessionManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -31,6 +33,7 @@ public class LimitFragment extends Fragment implements LimitAdapter.LimitAdapter
     private long userId;
     private NavController navController;
     private FloatingActionButton addLimit;
+    private CategoryViewModel viewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,9 @@ public class LimitFragment extends Fragment implements LimitAdapter.LimitAdapter
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_limit, container, false);
         navController = NavHostFragment.findNavController(LimitFragment.this);
+        this.viewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
+        User activeSession = SessionManager.getActiveSession(getContext());
+        userId = activeSession.getId();
         RecyclerView recyclerViewLimit = root.findViewById(R.id.recyclerViewLimit);
         this.adapter = new LimitAdapter(this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -53,22 +59,19 @@ public class LimitFragment extends Fragment implements LimitAdapter.LimitAdapter
             NavDirections action = LimitFragmentDirections.actionLimitFragment2ToAddLimitFragment(userId);
             navController.navigate(action);
         });
-        this.updateCategoryList();
 
         return root;
     }
-
-    public void updateCategoryList(){
-        User activeSession = SessionManager.getActiveSession(getContext());
-        userId = activeSession.getId();
-        List<Category> categoryList = Database.getInstance(getContext()).getcategoryDAO().getUserCategoryLimit(userId);
-        this.adapter.updateCategoryList(categoryList);
-
+    @Override
+    public void onStart() {
+        super.onStart();
+        this.viewModel.refreshTicket();
     }
+
 
     @Override
     public void onLimitClicked(long categoryId) {
-        NavDirections action = LimitFragmentDirections.actionLimitFragment2ToAddLimitFragment(categoryId);
+        NavDirections action = LimitFragmentDirections.actionLimitFragment2ToLimitDetailsFragment(categoryId,userId);
         navController.navigate(action);
     }
 
@@ -91,8 +94,7 @@ public class LimitFragment extends Fragment implements LimitAdapter.LimitAdapter
                 // Código a ser executado quando o utilizador clica em Delete
                 Category categoryname = Database.getInstance(LimitFragment.this.getContext()).getcategoryDAO().getById(categoryId);
                 Category category = new Category(categoryId,categoryname.getCategoryName(),0,userId);
-                Database.getInstance(LimitFragment.this.getContext()).getcategoryDAO().updateCategory(category);
-                LimitFragment.this.updateCategoryList();
+                LimitFragment.this.viewModel.updateCategoryApi(category);
             }
         });
 

@@ -3,6 +3,7 @@ package com.example.keepocket2.view.limit;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
 import androidx.navigation.fragment.NavHostFragment;
@@ -21,11 +22,13 @@ import com.example.keepocket2.R;
 import com.example.keepocket2.data.Category;
 import com.example.keepocket2.data.User;
 import com.example.keepocket2.data.localDatabase.Database;
+import com.example.keepocket2.view.Category.AddCategoryFragmentDirections;
+import com.example.keepocket2.view.Category.CategoryDetailsFragmentArgs;
 import com.example.keepocket2.view.Session.SessionManager;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import com.example.keepocket2.viewmodel.CategoryViewModel;
 
 public class AddLimitFragment extends Fragment implements AdapterView.OnItemSelectedListener {
     private Spinner spinnerLimit;
@@ -36,6 +39,7 @@ public class AddLimitFragment extends Fragment implements AdapterView.OnItemSele
     private List<String> categoryList;
     private long userId;
     private Button save;
+    private CategoryViewModel viewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,8 +52,9 @@ public class AddLimitFragment extends Fragment implements AdapterView.OnItemSele
         // Inflate the layout for this fragment
         View root= inflater.inflate(R.layout.fragment_add_limit, container, false);
         NavController navController = NavHostFragment.findNavController(AddLimitFragment.this);
-        User activeSession = SessionManager.getActiveSession(getContext());
-        userId = activeSession.getId();
+        AddLimitFragmentArgs arg = AddLimitFragmentArgs.fromBundle(getArguments());
+        userId = arg.getUserId();
+        this.viewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
         this.editTextLimit = root.findViewById(R.id.editTextLimitValue);
         this.spinnerLimit = root.findViewById(R.id.spinnerLimit);
         categoryList = Database.getInstance(getContext()).getcategoryDAO().getUserCategoryName(userId);
@@ -63,13 +68,19 @@ public class AddLimitFragment extends Fragment implements AdapterView.OnItemSele
         save.setOnClickListener(view->{
             String limitValueString = this.editTextLimit.getText().toString();
             int limitValueInt = Integer.parseInt(limitValueString);
-
-            Category category = Database.getInstance(getContext()).getcategoryDAO().getCategoryByName(userId,itemSelected);
-
-            Category categoryUpdate = new Category(category.getIdCategory(),category.getCategoryName(),limitValueInt,userId);
-            Database.getInstance(getContext()).getcategoryDAO().updateCategory(categoryUpdate);
-            NavDirections action= AddLimitFragmentDirections.actionAddLimitFragmentToLimitFragment2();
-            navController.navigate(action);
+            if (limitValueString.isEmpty()) {
+                // TODO dar erro
+            } else {
+                try{
+                    Category category = Database.getInstance(getContext()).getcategoryDAO().getCategoryByName(userId,itemSelected);
+                    Category categoryUpdate = new Category(category.getIdCategory(),category.getCategoryName(),limitValueInt,userId);
+                    this.viewModel.updateCategoryApi(categoryUpdate);
+                    NavDirections action = AddCategoryFragmentDirections.actionAddCategoryFragmentToCategoryFragment();
+                    navController.navigate(action);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         });
 
 

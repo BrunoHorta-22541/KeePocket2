@@ -23,7 +23,8 @@ public interface CategoryDAO {
     void createCategorys(List<Category> category);
 
     @Query("SELECT * FROM Category WHERE idUser = :userId")
-    LiveData<List<Category>> getUserCategory(long userId);
+    LiveData<List<Category>> getUserCategories(long userId);
+
 
     @Query("SELECT categoryName FROM Category WHERE idUser = :userId")
     List<String> getUserCategoryName(long userId);
@@ -43,4 +44,5 @@ public interface CategoryDAO {
 
     @Insert
     void insertCategory(Category category);
+
 }

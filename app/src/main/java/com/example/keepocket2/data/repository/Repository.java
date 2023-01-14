@@ -5,8 +5,10 @@ import android.content.Context;
 import androidx.lifecycle.LiveData;
 
 import com.example.keepocket2.data.Category;
+import com.example.keepocket2.data.Movement;
 import com.example.keepocket2.data.localDatabase.CategoryDAO;
 import com.example.keepocket2.data.localDatabase.Database;
+import com.example.keepocket2.data.localDatabase.MovementDAO;
 import com.example.keepocket2.data.service.CategoryService;
 
 import java.util.List;
@@ -27,18 +29,29 @@ public class Repository {
             .build();
 
     private CategoryDAO categoryDAO;
+    private MovementDAO movementDAO;
     private CategoryService categoryService;
     public Repository(Context context){
         this.categoryDAO = Database.getInstance(context).getcategoryDAO();
+        this.movementDAO = Database.getInstance(context).getmovementsDAO();
         this.categoryService = retrofit.create(CategoryService.class);
     }
     private Executor executor = Executors.newSingleThreadExecutor();
 
     public LiveData<List<Category>> getCategoryFromId(long userId){
-       return this.categoryDAO.getUserCategory(userId);
+       return this.categoryDAO.getUserCategories(userId);
+    }
+    public Category getCategoryFromCategoryId(long categoryId){
+        return this.categoryDAO.getById(categoryId);
     }
 
+    public LiveData<List<Movement>> getExpenseFromId(long userId){
+        return this.movementDAO.getExpense(userId);
+    }
 
+    public LiveData<List<Movement>> getIncomeFromId(long userId){
+        return this.movementDAO.getIncome(userId);
+    }
     public void createCategory(Category category){
      executor.execute(() -> categoryDAO.insertCategory(category));
     }

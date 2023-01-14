@@ -27,7 +27,7 @@ import com.example.keepocket2.data.User;
 import com.example.keepocket2.data.localDatabase.Database;
 import com.example.keepocket2.view.HomeFragmentDirections;
 import com.example.keepocket2.view.Session.SessionManager;
-import com.example.keepocket2.viewModel.CategoryViewModel;
+import com.example.keepocket2.viewmodel.CategoryViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;

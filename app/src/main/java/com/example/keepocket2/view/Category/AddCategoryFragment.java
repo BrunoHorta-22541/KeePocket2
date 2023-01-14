@@ -22,7 +22,7 @@ import com.example.keepocket2.data.Category;
 import com.example.keepocket2.data.User;
 import com.example.keepocket2.data.localDatabase.Database;
 import com.example.keepocket2.view.Session.SessionManager;
-import com.example.keepocket2.viewModel.CategoryViewModel;
+import com.example.keepocket2.viewmodel.CategoryViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -45,7 +45,8 @@ public class AddCategoryFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_add_category, container, false);
         this.viewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
-
+        AddCategoryFragmentArgs args = AddCategoryFragmentArgs.fromBundle(getArguments());
+        userId = args.getUserId();
 
 
         return root;
@@ -59,8 +60,7 @@ public class AddCategoryFragment extends Fragment {
         this.editTextCategoryName = view.findViewById(R.id.categoryNameEditText);
         save = view.findViewById(R.id.button2);
         save.setOnClickListener(view1-> {
-            User activeSession = SessionManager.getActiveSession(getContext());
-            userId = activeSession.getId();
+
             String nameCategory = this.editTextCategoryName.getText().toString();
             if (nameCategory.isEmpty()) {
                 // TODO dar erro

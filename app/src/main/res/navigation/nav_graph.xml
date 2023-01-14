@@ -59,7 +59,7 @@
             android:id="@+id/action_addCategoryFragment_to_categoryFragment"
             app:destination="@id/categoryFragment" />
         <argument
-            android:name="Id"
+            android:name="userId"
             app:argType="long" />
     </fragment>
     <fragment
@@ -86,7 +86,7 @@
             android:id="@+id/action_addLimitFragment_to_limitFragment2"
             app:destination="@id/limitFragment" />
         <argument
-            android:name="categoryId"
+            android:name="userId"
             app:argType="long" />
     </fragment>
     <fragment
@@ -99,6 +99,9 @@
             app:destination="@id/limitFragment" />
         <argument
             android:name="categoryId"
+            app:argType="long" />
+        <argument
+            android:name="userId"
             app:argType="long" />
     </fragment>
     <fragment
