@@ -10,6 +10,7 @@ import com.example.keepocket2.data.localDatabase.CategoryDAO;
 import com.example.keepocket2.data.localDatabase.Database;
 import com.example.keepocket2.data.localDatabase.MovementDAO;
 import com.example.keepocket2.data.service.CategoryService;
+import com.example.keepocket2.data.service.MovementService;
 
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -31,10 +32,12 @@ public class Repository {
     private CategoryDAO categoryDAO;
     private MovementDAO movementDAO;
     private CategoryService categoryService;
+    private MovementService movementService;
     public Repository(Context context){
         this.categoryDAO = Database.getInstance(context).getcategoryDAO();
         this.movementDAO = Database.getInstance(context).getmovementsDAO();
         this.categoryService = retrofit.create(CategoryService.class);
+        this.movementService = retrofit.create(MovementService.class);
     }
     private Executor executor = Executors.newSingleThreadExecutor();
 
@@ -70,6 +73,22 @@ public class Repository {
 
             @Override
             public void onFailure(Call<List<Category>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void refreshMovement(){
+        this.movementService.getMovementList().enqueue(new Callback<List<Movement>>() {
+            @Override
+            public void onResponse(Call<List<Movement>> call, Response<List<Movement>> response) {
+                if(response.isSuccessful()){
+                    executor.execute(() -> movementDAO.createMovements(response.body()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Movement>> call, Throwable t) {
 
             }
         });

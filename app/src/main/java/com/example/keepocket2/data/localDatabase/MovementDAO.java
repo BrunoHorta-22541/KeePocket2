@@ -1,11 +1,14 @@
 package com.example.keepocket2.data.localDatabase;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.example.keepocket2.data.Category;
 import com.example.keepocket2.data.Movement;
 
 import java.util.List;
@@ -14,11 +17,14 @@ public interface MovementDAO {
     @Query("SELECT * FROM Movement")
     List<Movement> getAll();
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void createMovements(List<Movement> movement);
+
     @Query("SELECT * FROM movement  WHERE idMovement = :movementsId")
     Movement getById(long movementsId);
 
     @Query("SELECT * FROM Movement WHERE idUser = :userId AND value>0")
-    List<Movement> getIncome(long userId);
+    LiveData<List<Movement>> getIncome(long userId);
 
     /*
     @Query("SELECT * FROM Movements WHERE idUser = :userId AND value>0 AND MONTH('%m',movementsDate)  = :mm")
@@ -30,7 +36,8 @@ public interface MovementDAO {
      */
 
     @Query("SELECT * FROM Movement WHERE idUser = :userId AND value<0")
-    List<Movement> getExpense(long userId);
+    LiveData<List<Movement>> getExpense(long userId);
+
 
     @Delete
     void delete(Movement movements);

@@ -4,7 +4,10 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
 import androidx.navigation.fragment.NavHostFragment;
@@ -21,6 +24,7 @@ import com.example.keepocket2.data.Movement;
 import com.example.keepocket2.data.User;
 import com.example.keepocket2.data.localDatabase.Database;
 import com.example.keepocket2.view.Session.SessionManager;
+import com.example.keepocket2.viewmodel.MovementViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -32,7 +36,7 @@ public class IncomeFragment extends Fragment implements IncomeAdapter.IncomeAdap
     private long userId;
     private NavController navController;
     private FloatingActionButton addIncome;
-
+    private MovementViewModel viewModel;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +48,7 @@ public class IncomeFragment extends Fragment implements IncomeAdapter.IncomeAdap
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_income, container, false);
         navController = NavHostFragment.findNavController(com.example.keepocket2.view.Income.IncomeFragment.this);
+        this.viewModel = new ViewModelProvider(this).get(MovementViewModel.class);
         RecyclerView recyclerViewIncome = root.findViewById(R.id.incomeRecyclerView);
         this.adapter = new IncomeAdapter(this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -54,17 +59,15 @@ public class IncomeFragment extends Fragment implements IncomeAdapter.IncomeAdap
             NavDirections action = IncomeFragmentDirections.actionIncomeFragment2ToAddIncomeFragment();
             navController.navigate(action);
         });
-        this.updateIncomeList();
-
         return root;
     }
 
-    public void updateIncomeList(){
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         User activeSession = SessionManager.getActiveSession(getContext());
         userId = activeSession.getId();
-        List<Movement> movementsList = Database.getInstance(getContext()).getmovementsDAO().getIncome(this.userId);
-        this.adapter.updateIncomeList(movementsList);
-
+        this.viewModel.getIncomeById(userId).observe(getViewLifecycleOwner(), categories -> adapter.updateIncomeList(categories));
     }
 
     @Override
@@ -90,13 +93,17 @@ public class IncomeFragment extends Fragment implements IncomeAdapter.IncomeAdap
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 // Código a ser executado quando o utilizador clica em Delete
-                Movement movements = Database.getInstance(getContext()).getmovementsDAO().getById(movementId);
-                Database.getInstance(getContext()).getmovementsDAO().delete(movements);
-                IncomeFragment.this.updateIncomeList();
+                IncomeFragment.this.viewModel.deleteMovement(movementId);
             }
         });
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        this.viewModel.refreshTicket();
     }
 }

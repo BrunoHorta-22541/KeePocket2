@@ -2,13 +2,14 @@ package com.example.keepocket2.view.Expense;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,12 +22,10 @@ import com.example.keepocket2.R;
 import com.example.keepocket2.data.Movement;
 import com.example.keepocket2.data.User;
 import com.example.keepocket2.data.localDatabase.Database;
+import com.example.keepocket2.view.Category.CategoryFragment;
 import com.example.keepocket2.view.Session.SessionManager;
-import com.example.keepocket2.view.limit.LimitFragment;
-import com.example.keepocket2.view.limit.LimitFragmentDirections;
+import com.example.keepocket2.viewmodel.MovementViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.List;
 
 
 public class ExpenseFragment extends Fragment implements ExpensesAdapter.ExpensesAdapterEventListener{
@@ -34,7 +33,7 @@ public class ExpenseFragment extends Fragment implements ExpensesAdapter.Expense
     private long userId;
     private NavController navController;
     private FloatingActionButton addExpense;
-
+    private MovementViewModel viewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,6 +47,7 @@ public class ExpenseFragment extends Fragment implements ExpensesAdapter.Expense
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_expense, container, false);
         navController = NavHostFragment.findNavController(ExpenseFragment.this);
+        this.viewModel = new ViewModelProvider(this).get(MovementViewModel.class);
         RecyclerView recyclerView = root.findViewById(R.id.recyclerViewExpenses);
         this.adapter = new ExpensesAdapter(this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -61,6 +61,14 @@ public class ExpenseFragment extends Fragment implements ExpensesAdapter.Expense
             navController.navigate(action);
         });
         return root;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        User activeSession = SessionManager.getActiveSession(getContext());
+        userId = activeSession.getId();
+        this.viewModel.getExpenseById(userId).observe(getViewLifecycleOwner(), categories -> adapter.updateExpenseList(categories));
     }
 
     @Override
@@ -87,9 +95,7 @@ public class ExpenseFragment extends Fragment implements ExpensesAdapter.Expense
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 // Código a ser executado quando o utilizador clica em Delete
-                Movement movements = Database.getInstance(getContext()).getmovementsDAO().getById(movementsId);
-                Database.getInstance(getContext()).getmovementsDAO().delete(movements);
-                ExpenseFragment.this.updateExpenseList();
+                ExpenseFragment.this.viewModel.deleteMovement(movementsId);
             }
         });
 
@@ -98,13 +104,8 @@ public class ExpenseFragment extends Fragment implements ExpensesAdapter.Expense
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        this.updateExpenseList();
-    }
-
-    private void updateExpenseList() {
-        List<Movement> movementsList = Database.getInstance(getContext()).getmovementsDAO().getExpense(this.userId);
-        this.adapter.updateIncomeList(movementsList);
+    public void onStart() {
+        super.onStart();
+        this.viewModel.refreshTicket();
     }
 }

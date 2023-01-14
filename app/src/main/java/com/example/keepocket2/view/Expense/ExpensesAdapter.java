@@ -63,7 +63,7 @@ public class ExpensesAdapter extends RecyclerView.Adapter<ExpensesAdapter.Expens
     public int getItemCount(){
         return this.movementList.size();
     }
-    public void updateIncomeList(List<Movement> allMovements){
+    public void updateExpenseList(List<Movement> allMovements){
         this.movementList = allMovements;
         notifyDataSetChanged();
     }
