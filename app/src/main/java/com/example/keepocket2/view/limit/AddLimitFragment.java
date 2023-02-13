@@ -1,7 +1,6 @@
 package com.example.keepocket2.view.limit;
 
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -68,24 +67,13 @@ public class AddLimitFragment extends Fragment implements AdapterView.OnItemSele
         save.setOnClickListener(view->{
             String limitValueString = this.editTextLimit.getText().toString();
             int limitValueInt = Integer.parseInt(limitValueString);
-            if (limitValueString.isEmpty()) {
-                // TODO dar erro
-            } else {
-                try{
+
                     Category category = Database.getInstance(getContext()).getcategoryDAO().getCategoryByName(userId,itemSelected);
                     Category categoryUpdate = new Category(category.getIdCategory(),category.getCategoryName(),limitValueInt,userId);
                     this.viewModel.updateCategoryApi(categoryUpdate);
-                    NavDirections action = AddCategoryFragmentDirections.actionAddCategoryFragmentToCategoryFragment();
+                    NavDirections action = AddLimitFragmentDirections.actionAddLimitFragmentToLimitFragment2();
                     navController.navigate(action);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
         });
-
-
-
-
         return root;
     }
 

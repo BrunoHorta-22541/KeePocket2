@@ -36,6 +36,8 @@ public class Repository {
     private UserDAO userDAO;
     private CategoryService categoryService;
     private MovementService movementService;
+    private User user;
+    private LiveData<List<User>> userList;
     public Repository(Context context){
         this.categoryDAO = Database.getInstance(context).getcategoryDAO();
         this.movementDAO = Database.getInstance(context).getmovementsDAO();
@@ -69,12 +71,19 @@ public class Repository {
     public void createUser(User user){
         executor.execute(() -> userDAO.insertUser(user));
     }
-    public String getUserByEmail(String email){
-        executor.execute(()-> userDAO.getByEmail(email));
-        return email;
+    public User getUserByEmail(String email){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                user = userDAO.getByEmail(email);
+
+            }
+
+        });
+        return user;
     }
     public LiveData<List<User>> listAllUsers(){
-        return this.userDAO.getAll();
+        return userDAO.getAll();
     }
     public long userCreated(User user){
         executor.execute(() -> userDAO.insertedUser(user));

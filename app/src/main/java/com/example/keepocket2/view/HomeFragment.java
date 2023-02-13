@@ -32,4 +32,5 @@ private TextView textView;
         textView.setText(activeSession.getEmail());
         return root;
     }
+
 }

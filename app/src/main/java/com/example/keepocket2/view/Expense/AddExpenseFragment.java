@@ -71,8 +71,8 @@ public class AddExpenseFragment extends Fragment implements AdapterView.OnItemSe
             int valueExpenseNegative= valueExpenseInt * (-1);
             Movement movements = new Movement(0, userId, category.getIdCategory(),valueExpenseNegative, description, System.currentTimeMillis());
             Database.getInstance(getContext()).getmovementsDAO().insert(movements);
-           // NavDirections action = AddExpenseFragmentDirections.actionAddExpenseFragmentToExpenseFragment();
-            //navController.navigate(action);
+            NavDirections action = AddExpenseFragmentDirections.actionAddExpenseFragmentToExpenseFragment();
+            navController.navigate(action);
         });
         return root;
     }

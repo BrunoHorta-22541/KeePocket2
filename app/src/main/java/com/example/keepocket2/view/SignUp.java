@@ -40,19 +40,18 @@ public class SignUp extends AppCompatActivity {
         String password = editTextPassword.getText().toString();
         if (email.isEmpty()) {
             Toast.makeText(this, "Email cannot be empty!", Toast.LENGTH_LONG).show();
-
         }
         if (password.isEmpty()) {
             Toast.makeText(this, "Password cannot be empty!", Toast.LENGTH_LONG).show();
-            SignUp.startActivity(this);
         }else if(!email.isEmpty() && !password.isEmpty()){
-            boolean isSignedUp = userViewModel.createUserApi(email, password);
+
+            userViewModel.createUserApi(email, password);
             Toast.makeText(context, "Cadastrado com sucesso", Toast.LENGTH_LONG).show();
             LoginActivity.startActivity(context);
         } else {
             // show error message
-            SignUp.startActivity(this);
             Toast.makeText(context, "Erro ao cadastrar", Toast.LENGTH_LONG).show();
+            SignUp.startActivity(this);
         }
     }
 }

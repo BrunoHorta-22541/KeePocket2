@@ -35,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         this.editTextEmail = findViewById(R.id.editTextEmail);
         this.editTextPassword = findViewById(R.id.editTextPassword);
         this.checkBoxRemeberMe = findViewById(R.id.checkBoxRemeberMe);
+        LoginManager loginManager = new LoginManager(getApplication());
     }
 
     @Override
