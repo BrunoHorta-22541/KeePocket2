@@ -50,6 +50,9 @@ public class Repository {
     public LiveData<List<Category>> getCategoryFromId(long userId){
        return this.categoryDAO.getUserCategories(userId);
     }
+    public LiveData<List<Category>> getCategoryLimitFromId(long userId){
+        return this.categoryDAO.getUserCategoryLimit(userId);
+    }
     public Category getCategoryFromCategoryId(long categoryId){
         return this.categoryDAO.getById(categoryId);
     }

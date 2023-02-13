@@ -33,7 +33,7 @@ public interface CategoryDAO {
     Category getCategoryByName(long userId, String nameCategory);
 
     @Query("SELECT * FROM Category WHERE idUser = :userId AND `limit` > 0 ")
-    List<Category> getUserCategoryLimit(long userId);
+    LiveData<List<Category>> getUserCategoryLimit(long userId);
 
     @Delete
     void delete(Category category);
