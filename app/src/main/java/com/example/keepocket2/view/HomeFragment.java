@@ -71,6 +71,7 @@ private long userId;
 
         pieChart = root.findViewById(R.id.chart);
         pieEntries = new ArrayList<>();
+        fillExpensesArrayList();
 
         for (Map.Entry<String, Integer> entry : expensesDataDataset.entrySet()){
             pieEntries.add(new PieEntry(entry.getValue(), entry.getKey()));
