@@ -19,21 +19,30 @@ public class SessionManager {
         }
         return sharedPreferences;
     }
-
-    public static void saveSession(Context context, String username, boolean rememberMe, long userId,String password) {
+    public static void saveSession(Context context, String username, boolean rememberMe, long userId,String password,String name,String ver,String rem,long created,long updated) {
         getSharedPreferences(context)
                 .edit()
                 .putString("username", username)
                 .putLong("userId", userId)
                 .putString("password", password)
+                .putString("name",name)
+                .putString("verified",ver)
+                .putString("remember",rem)
+                .putLong("created",created)
+                .putLong("updated",updated)
                 .putBoolean("rememberMe", rememberMe).apply();
     }
 
     public static User getActiveSession(Context context) {
         String username = getSharedPreferences(context).getString("username", null);
         String password = getSharedPreferences(context).getString("password", null);
+        String name = getSharedPreferences(context).getString("name", null);
+        String verif = getSharedPreferences(context).getString("verified", null);
+        String remeb = getSharedPreferences(context).getString("remember", null);
+        long created =getSharedPreferences(context).getLong("created", 0);
+        long updated =getSharedPreferences(context).getLong("updated", 0);
         long userId = getSharedPreferences(context).getLong("userId", 0);
-        return new User(userId,username,password);
+        return new User(userId,username,password,name,verif,remeb,created,updated);
     }
 
     public static boolean sessionExists(Context context) {

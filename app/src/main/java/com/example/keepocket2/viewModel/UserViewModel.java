@@ -27,7 +27,7 @@ public class UserViewModel extends AndroidViewModel {
     public void createUserApi(String email, String password){
         User existingUser = repository.getUserByEmail(email);
         if(existingUser == null){
-            User user = new User(0,email,password);
+            User user = new User(0,email,email,null,password,null,System.currentTimeMillis(),System.currentTimeMillis());
             this.repository.createUser(user);
         }else{
             Toast.makeText(getApplication().getApplicationContext(), "User already exists with this email!", Toast.LENGTH_LONG).show();
@@ -43,7 +43,9 @@ public class UserViewModel extends AndroidViewModel {
     public void updateUserApi(User user){
         this.repository.updateUser(user);
     }
-
+    public void refreshUser(){
+        this.repository.refreshUser();
+    }
     public LiveData<List<User>> getAllUsers() {
         return this.repository.listAllUsers();
     }

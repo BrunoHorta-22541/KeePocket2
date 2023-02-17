@@ -13,6 +13,7 @@ import com.example.keepocket2.data.localDatabase.MovementDAO;
 import com.example.keepocket2.data.localDatabase.UserDAO;
 import com.example.keepocket2.data.service.CategoryService;
 import com.example.keepocket2.data.service.MovementService;
+import com.example.keepocket2.data.service.UserService;
 
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -27,15 +28,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Repository {
 
     private Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:5011/api/")
+            .baseUrl("http://10.0.2.2:8000/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
-
     private CategoryDAO categoryDAO;
     private MovementDAO movementDAO;
     private UserDAO userDAO;
     private CategoryService categoryService;
     private MovementService movementService;
+    private UserService userService;
     private User user;
     private LiveData<List<User>> userList;
     public Repository(Context context){
@@ -44,6 +45,7 @@ public class Repository {
         this.userDAO = Database.getInstance(context).getuserDAO();
         this.categoryService = retrofit.create(CategoryService.class);
         this.movementService = retrofit.create(MovementService.class);
+        this.userService = retrofit.create(UserService.class);
     }
     private Executor executor = Executors.newSingleThreadExecutor();
 
@@ -72,7 +74,40 @@ public class Repository {
         executor.execute(() -> categoryDAO.updateCategory(category));
     }
     public void createUser(User user){
-        executor.execute(() -> userDAO.insertUser(user));
+
+        User userOut = new User(user.getId(), user.getEmail(),user.getEmail()
+                , user.getEmailver(),user.getPassword(), user.getRemeber(), user.getCreated(),user.getUpdated());
+        this.userService.createUser(userOut).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful()) {
+
+                    executor.execute(() -> userDAO.insertUser(user));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                t.printStackTrace();
+                System.out.print(t.getMessage());
+            }
+        });
+    }
+    public void refreshUser() {
+
+        this.userService.getUserList().enqueue(new Callback<List<User>>() {
+            @Override
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                if(response.isSuccessful()){
+                    executor.execute(() -> userDAO.createUser(response.body()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+
+            }
+        });
     }
     public User getUserByEmail(String email){
         new Thread(new Runnable() {
@@ -95,7 +130,27 @@ public class Repository {
     public void updateUser(User user){
         executor.execute(() -> userDAO.updateUser(user));
     }
+
+    public void createCategoryAPI(Category category){
+        Category categoryOut = new Category(category.getIdCategory(), category.getCategoryName()
+                , category.getLimit(), category.getIdUser());
+        this.categoryService.createCategory(categoryOut).enqueue(new Callback<Category>() {
+            @Override
+            public void onResponse(Call<Category> call, Response<Category> response) {
+                if (response.isSuccessful()) {
+                    executor.execute(() -> categoryDAO.insertCategory(response.body()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Category> call, Throwable t) {
+                t.printStackTrace();
+                System.out.print(t.getMessage());
+            }
+        });
+    }
     public void refreshCategory() {
+
         this.categoryService.getCategoryList().enqueue(new Callback<List<Category>>() {
             @Override
             public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {

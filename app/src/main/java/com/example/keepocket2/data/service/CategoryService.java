@@ -14,15 +14,15 @@ import retrofit2.http.Path;
 
 public interface CategoryService {
 
-    @GET("Category")
+    @GET("categories")
     Call<List<Category>> getCategoryList();
 
-    @POST("Category")
+    @POST("categories")
     Call<Category> createCategory(@Body Category newCategory);
 
-    @PUT("Categorys/{categoryId}")
+    @PUT("categories/{categoryId}")
     Call<Category> updateCategory(@Body Category updatedCategory, @Path("categoryId") int categoryId);
 
-    @DELETE("Category/{categoryId}")
+    @DELETE("categories/{categoryId}")
     Call<Category> deleteCategory(@Path("categoryId") int categoryId);
 }
