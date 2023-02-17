@@ -2,12 +2,7 @@ package com.example.keepocket2.view;
 
 import android.os.Bundle;
 
-<<<<<<< HEAD
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-=======
 import androidx.appcompat.app.AlertDialog;
->>>>>>> d8e44c8b449c70228d0e42ce602218e23f77fd7e
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
@@ -24,16 +19,6 @@ import com.example.keepocket2.R;
 import com.example.keepocket2.data.Movement;
 import com.example.keepocket2.data.User;
 import com.example.keepocket2.view.Session.SessionManager;
-<<<<<<< HEAD
-import com.example.keepocket2.viewmodel.UserViewModel;
-
-import java.util.ArrayList;
-import java.util.Map;
-
-public class HomeFragment extends Fragment {
-private TextView textView;
-    private UserViewModel viewModel;
-=======
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
@@ -66,7 +51,7 @@ private long userId;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.viewModel = new UserViewModel(this.requireActivity().getApplication());
+
 
     }
 
@@ -136,9 +121,4 @@ private long userId;
         arrayList.add(list);
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        this.viewModel.refreshUser();
-    }
 }
