@@ -2,7 +2,16 @@ package com.example.keepocket2.view;
 
 import android.os.Bundle;
 
+<<<<<<< Updated upstream
 import androidx.appcompat.app.AlertDialog;
+=======
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import androidx.appcompat.app.AlertDialog;
+
+>>>>>>> Stashed changes
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
@@ -19,6 +28,15 @@ import com.example.keepocket2.R;
 import com.example.keepocket2.data.Movement;
 import com.example.keepocket2.data.User;
 import com.example.keepocket2.view.Session.SessionManager;
+<<<<<<< Updated upstream
+=======
+
+import com.example.keepocket2.viewmodel.UserViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+>>>>>>> Stashed changes
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
@@ -38,6 +56,7 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
 private TextView textView;
+
 private PieChart pieChart;
 private ArrayList<PieEntry> pieEntries;
 private Map<String, Integer> expensesDataDataset = new HashMap<>();
@@ -121,4 +140,11 @@ private long userId;
         arrayList.add(list);
     }
 
+<<<<<<< Updated upstream
+=======
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+>>>>>>> Stashed changes
 }
