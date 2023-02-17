@@ -2,16 +2,16 @@ package com.example.keepocket2.view;
 
 import android.os.Bundle;
 
-<<<<<<< Updated upstream
+
 import androidx.appcompat.app.AlertDialog;
-=======
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import androidx.appcompat.app.AlertDialog;
 
->>>>>>> Stashed changes
+
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
