@@ -28,15 +28,9 @@ import com.example.keepocket2.R;
 import com.example.keepocket2.data.Movement;
 import com.example.keepocket2.data.User;
 import com.example.keepocket2.view.Session.SessionManager;
-<<<<<<< Updated upstream
-=======
-
-import com.example.keepocket2.viewmodel.UserViewModel;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
->>>>>>> Stashed changes
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
@@ -48,11 +42,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.ArrayList;
-import java.util.List;
 
 public class HomeFragment extends Fragment {
 private TextView textView;
@@ -140,11 +130,10 @@ private long userId;
         arrayList.add(list);
     }
 
-<<<<<<< Updated upstream
-=======
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
->>>>>>> Stashed changes
+
 }
