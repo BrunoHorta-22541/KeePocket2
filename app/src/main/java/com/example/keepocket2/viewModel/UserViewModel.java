@@ -12,6 +12,8 @@ import com.example.keepocket2.data.localDatabase.Database;
 import com.example.keepocket2.data.localDatabase.UserDAO;
 import com.example.keepocket2.data.repository.Repository;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import java.util.List;
 
 public class UserViewModel extends AndroidViewModel {
@@ -27,7 +29,8 @@ public class UserViewModel extends AndroidViewModel {
     public void createUserApi(String email, String password){
         User existingUser = repository.getUserByEmail(email);
         if(existingUser == null){
-            User user = new User(0,email,email,null,password,null,System.currentTimeMillis(),System.currentTimeMillis());
+            String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt(10));
+            User user = new User(0,email,email,null,hashedPassword,null,System.currentTimeMillis(),System.currentTimeMillis());
             this.repository.createUser(user);
         }else{
             Toast.makeText(getApplication().getApplicationContext(), "User already exists with this email!", Toast.LENGTH_LONG).show();

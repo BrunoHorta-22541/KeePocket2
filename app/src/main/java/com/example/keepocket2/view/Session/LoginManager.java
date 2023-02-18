@@ -10,6 +10,8 @@ import com.example.keepocket2.data.localDatabase.Database;
 import com.example.keepocket2.data.localDatabase.UserDAO;
 import com.example.keepocket2.viewmodel.UserViewModel;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -26,8 +28,16 @@ public class LoginManager {
         User user;
         user = userDAO.getByEmail(email);
 
-        if (user == null) return null;
-        return user.getPassword().equals(password) ? user : null;
+        String hashDeSenhaArmazenadoNoBD = user.getPassword();
+        if(user == null){
+            return null;
+        }else if(BCrypt.checkpw(password, hashDeSenhaArmazenadoNoBD)){
+            return user;
+        }
+        else {
+            System.out.println("A senha está incorreta!");
+            return null;
+        }
     }
 }
 
