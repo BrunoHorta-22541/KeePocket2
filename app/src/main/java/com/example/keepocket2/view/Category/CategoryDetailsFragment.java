@@ -58,7 +58,8 @@ public class CategoryDetailsFragment extends Fragment {
                 // TODO dar erro
             } else {
                 try{
-                    Category categoryedit = new Category(idCategory, nameCategory, 0, userId);
+                    String actuallimit = category.getLimit();
+                    Category categoryedit = new Category(idCategory, nameCategory, actuallimit,String.valueOf(userId));
                     CategoryDetailsFragment.this.viewModel.updateCategoryApi(categoryedit);
                     NavDirections action = CategoryDetailsFragmentDirections.actionCategoryDetailsFragmentToCategoryFragment();
                     navController.navigate(action);

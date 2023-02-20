@@ -18,12 +18,10 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.example.keepocket2.R;
 import com.example.keepocket2.data.Movement;
 import com.example.keepocket2.data.User;
@@ -31,6 +29,9 @@ import com.example.keepocket2.view.Session.SessionManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import com.example.keepocket2.viewmodel.CategoryViewModel;
+import com.example.keepocket2.viewmodel.UserViewModel;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
@@ -52,7 +53,6 @@ private ArrayList<PieEntry> pieEntries;
 private Map<String, Integer> expensesDataDataset = new HashMap<>();
 private AlertDialog alertDialog;
 private NavController navController;
-
 private com.example.keepocket2.viewmodel.MovementViewModel viewModel;
 
 private long userId;
@@ -71,6 +71,7 @@ private long userId;
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         User activeSession = SessionManager.getActiveSession(getContext());
         userId = activeSession.getId();
+
         this.viewModel = new ViewModelProvider(this).get(com.example.keepocket2.viewmodel.MovementViewModel.class);
         textView = root.findViewById(R.id.textViewUsername);
         textView.setText(activeSession.getEmail());
@@ -125,7 +126,7 @@ private long userId;
         return root;
     }
     private void fillExpensesArrayList() {
-        LiveData<List<Movement>> list = this.viewModel.getExpenseById(userId);
+        LiveData<List<Movement>> list = this.viewModel.getExpenseByIdGroup(userId);
         ArrayList<LiveData<List<Movement>>> arrayList = new ArrayList<>();
         arrayList.add(list);
     }
@@ -134,6 +135,7 @@ private long userId;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
     }
 
 }

@@ -70,7 +70,7 @@ public class AddIncomeFragment extends Fragment implements AdapterView.OnItemSel
             int valueIncomeInt = Integer.parseInt(valueIncomeString);
             Category category = Database.getInstance(getContext()).getcategoryDAO().getCategoryByName(userId, itemSelected);
 
-            Movement movements = new Movement(0, userId, category.getIdCategory(), valueIncomeInt, description, System.currentTimeMillis());
+            Movement movements = new Movement(0, String.valueOf(userId), String.valueOf(category.getIdCategory()), String.valueOf(valueIncomeInt), description, String.valueOf(System.currentTimeMillis()));
             Database.getInstance(getContext()).getmovementsDAO().insert(movements);
 
             NavDirections action= AddIncomeFragmentDirections.actionAddIncomeFragmentToIncomeFragment2();

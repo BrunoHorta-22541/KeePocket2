@@ -59,12 +59,12 @@ public class LimitDetailsFragment extends Fragment {
         edit.setOnClickListener(view->{
             String limitValueString = this.valueLimit.getText().toString();
             String nameCategory = categoryList.getCategoryName();
-            int categoryLimit = Integer.parseInt(limitValueString);
+            //int categoryLimit = Integer.parseInt(limitValueString);
             if (nameCategory.isEmpty()) {
                 // TODO dar erro
             } else {
                 try{
-                    Category categoryedit = new Category(idCategory, nameCategory, categoryLimit, userId);
+                    Category categoryedit = new Category(idCategory, nameCategory, limitValueString, String.valueOf(userId));
                     LimitDetailsFragment.this.viewModel.updateCategoryApi(categoryedit);
                     NavDirections action = CategoryDetailsFragmentDirections.actionCategoryDetailsFragmentToCategoryFragment();
                     navController.navigate(action);

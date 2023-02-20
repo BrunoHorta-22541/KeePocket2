@@ -14,7 +14,11 @@ import com.example.keepocket2.data.repository.Repository;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class UserViewModel extends AndroidViewModel {
     private UserDAO userDAO;
@@ -30,7 +34,11 @@ public class UserViewModel extends AndroidViewModel {
         User existingUser = repository.getUserByEmail(email);
         if(existingUser == null){
             String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt(10));
-            User user = new User(0,email,email,null,hashedPassword,null,System.currentTimeMillis(),System.currentTimeMillis());
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+            formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+            String created=formatter.format(new Date(System.currentTimeMillis())) ;
+            String updated= formatter.format(new Date(System.currentTimeMillis()));
+            User user = new User(0,email,email,null,hashedPassword,null,created,updated);
             this.repository.createUser(user);
         }else{
             Toast.makeText(getApplication().getApplicationContext(), "User already exists with this email!", Toast.LENGTH_LONG).show();

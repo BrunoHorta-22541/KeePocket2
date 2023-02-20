@@ -19,7 +19,7 @@ public class SessionManager {
         }
         return sharedPreferences;
     }
-    public static void saveSession(Context context, String username, boolean rememberMe, long userId,String password,String name,String ver,String rem,long created,long updated) {
+    public static void saveSession(Context context, String username, boolean rememberMe, long userId, String password, String name, String ver, String rem, String created, String updated) {
         getSharedPreferences(context)
                 .edit()
                 .putString("username", username)
@@ -28,8 +28,8 @@ public class SessionManager {
                 .putString("name",name)
                 .putString("verified",ver)
                 .putString("remember",rem)
-                .putLong("created",created)
-                .putLong("updated",updated)
+                .putString("created",created)
+                .putString("updated",updated)
                 .putBoolean("rememberMe", rememberMe).apply();
     }
 
@@ -39,8 +39,8 @@ public class SessionManager {
         String name = getSharedPreferences(context).getString("name", null);
         String verif = getSharedPreferences(context).getString("verified", null);
         String remeb = getSharedPreferences(context).getString("remember", null);
-        long created =getSharedPreferences(context).getLong("created", 0);
-        long updated =getSharedPreferences(context).getLong("updated", 0);
+        String created =getSharedPreferences(context).getString("created", null);
+        String updated =getSharedPreferences(context).getString("updated", null);
         long userId = getSharedPreferences(context).getLong("userId", 0);
         return new User(userId,username,password,name,verif,remeb,created,updated);
     }

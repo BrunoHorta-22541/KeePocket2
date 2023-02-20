@@ -1,5 +1,6 @@
 package com.example.keepocket2.data.service;
 
+import com.example.keepocket2.data.APIResponse;
 import com.example.keepocket2.data.Category;
 import com.example.keepocket2.data.User;
 
@@ -15,7 +16,7 @@ import retrofit2.http.Path;
 
 public interface UserService {
     @GET("users")
-    Call<List<User>> getUserList();
+    Call<APIResponse<User>> getUserList();
 
     @POST("users")
     Call<User> createUser(@Body User newUser);

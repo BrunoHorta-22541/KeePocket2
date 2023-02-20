@@ -38,7 +38,7 @@ public class IncomeDetailsFragment extends Fragment implements AdapterView.OnIte
     private long categoryId;
     private String spinnerStringValue;
     ArrayAdapter<String> spinnerAdapter;
-    private long originalInsertDate;
+    private String originalInsertDate;
     private  long idincome;
     private Button edit;
     private long incomeId;
@@ -64,11 +64,11 @@ public class IncomeDetailsFragment extends Fragment implements AdapterView.OnIte
         userId = args.getUserId();
         categoryList = Database.getInstance(getContext()).getcategoryDAO().getUserCategoryName(userId);
         movement = Database.getInstance(getContext()).getmovementsDAO().getById(idincome);
-        categoryId = movement.getIdCategory();
+        categoryId = Integer.parseInt(movement.getIdCategory());
         Category category = Database.getInstance(getContext()).getcategoryDAO().getById(categoryId);
         spinnerStringValue = category.getCategoryName();
         this.descriptionIncome.setText(movement.getDescription());
-        this.valueIncome.setText(Integer.toString(movement.getValue()));
+        this.valueIncome.setText(movement.getValue());
         this.originalInsertDate = movement.getMovementsDate();
 
 
@@ -86,7 +86,7 @@ public class IncomeDetailsFragment extends Fragment implements AdapterView.OnIte
             String valueExpenseString = this.valueIncome.getText().toString();
             int valueExpenseInt = Integer.parseInt(valueExpenseString);
             Category category2 = Database.getInstance(getContext()).getcategoryDAO().getCategoryByName(userId, itemSelected);
-            Movement movements = new Movement(this.movement.getIdMovement(), userId, category2.getIdCategory(),valueExpenseInt, description, originalInsertDate);
+            Movement movements = new Movement(this.movement.getIdMovement(), String.valueOf(userId), String.valueOf(category2.getIdCategory()),String.valueOf(valueExpenseInt), description, originalInsertDate);
             Database.getInstance(getContext()).getmovementsDAO().update(movements);
 
             NavDirections action= IncomeDetailsFragmentDirections.actionIncomeDetailsFragmentToIncomeFragment2();

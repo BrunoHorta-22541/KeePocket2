@@ -66,10 +66,10 @@ public class AddLimitFragment extends Fragment implements AdapterView.OnItemSele
         save = root.findViewById(R.id.button6);
         save.setOnClickListener(view->{
             String limitValueString = this.editTextLimit.getText().toString();
-            int limitValueInt = Integer.parseInt(limitValueString);
+            //int limitValueInt = Integer.parseInt(limitValueString);
 
                     Category category = Database.getInstance(getContext()).getcategoryDAO().getCategoryByName(userId,itemSelected);
-                    Category categoryUpdate = new Category(category.getIdCategory(),category.getCategoryName(),limitValueInt,userId);
+                    Category categoryUpdate = new Category(category.getIdCategory(),category.getCategoryName(),limitValueString,String.valueOf(userId));
                     this.viewModel.updateCategoryApi(categoryUpdate);
                     NavDirections action = AddLimitFragmentDirections.actionAddLimitFragmentToLimitFragment2();
                     navController.navigate(action);

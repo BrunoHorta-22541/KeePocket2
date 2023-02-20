@@ -69,7 +69,7 @@ public class AddExpenseFragment extends Fragment implements AdapterView.OnItemSe
             int valueExpenseInt = Integer.parseInt(valueExpenseString);
             Category category = Database.getInstance(getContext()).getcategoryDAO().getCategoryByName(userId, itemSelected);
             int valueExpenseNegative= valueExpenseInt * (-1);
-            Movement movements = new Movement(0, userId, category.getIdCategory(),valueExpenseNegative, description, System.currentTimeMillis());
+            Movement movements = new Movement(0, String.valueOf(userId), String.valueOf(category.getIdCategory()),String.valueOf(valueExpenseNegative), description, String.valueOf(System.currentTimeMillis()));
             Database.getInstance(getContext()).getmovementsDAO().insert(movements);
             NavDirections action = AddExpenseFragmentDirections.actionAddExpenseFragmentToExpenseFragment();
             navController.navigate(action);

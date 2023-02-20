@@ -38,6 +38,8 @@ public interface MovementDAO {
     @Query("SELECT * FROM Movement WHERE idUser = :userId AND value<0")
     LiveData<List<Movement>> getExpense(long userId);
 
+    @Query("SELECT * FROM Movement WHERE idUser = :userId AND value<0 GROUP BY idCategory")
+    LiveData<List<Movement>> getExpenseGroup(long userId);
 
     @Delete
     void delete(Movement movement);

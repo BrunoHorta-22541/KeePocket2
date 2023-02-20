@@ -7,15 +7,15 @@ public class Movement {
 
     @PrimaryKey(autoGenerate = true)
     private long idMovement;
-    private long idUser;
-    private long idCategory;
-    private int value;
+    private String idUser;
+    private String idCategory;
+    private String value;
     private String description;
-    private long movementsDate;
+    private String movementsDate;
 
 
 
-    public Movement(long idMovement, long idUser, long idCategory, int value, String description, long movementsDate){
+    public Movement(long idMovement, String idUser, String idCategory, String value, String description, String movementsDate){
 
         this.idMovement = idMovement;
         this.idUser = idUser;
@@ -30,15 +30,15 @@ public class Movement {
         return idMovement;
     }
 
-    public long getIdUser() {
+    public String getIdUser() {
         return idUser;
     }
 
-    public long getIdCategory() {
+    public String getIdCategory() {
         return idCategory;
     }
 
-    public int getValue() {
+    public String getValue() {
         return value;
     }
 
@@ -46,7 +46,7 @@ public class Movement {
         return description;
     }
 
-    public long getMovementsDate() {
+    public String getMovementsDate() {
         return movementsDate;
     }
 

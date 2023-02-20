@@ -24,6 +24,8 @@ public interface UserDAO {
     @Query("SELECT * FROM User  WHERE id = :userid")
     User getById(long userid);
 
+    @Query("DELETE FROM User")
+    void clearTable();
 
     @Query("SELECT * FROM User  WHERE email = :email")
     User getByEmail(String email);

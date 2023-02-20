@@ -39,12 +39,13 @@ public class LoginActivity extends AppCompatActivity {
         this.checkBoxRemeberMe = findViewById(R.id.checkBoxRemeberMe);
         LoginManager loginManager = new LoginManager(getApplication());
         this.viewModel = new UserViewModel(this.getApplication());
+        viewModel.refreshUser();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        this.viewModel.refreshUser();
+
         if (SessionManager.sessionExists(getApplicationContext())) {
             MainActivity.startActivity(this);
             finish();
@@ -66,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
         User user = LoginManager.validateUser(email, password);
         if (user != null) {
             // logado
-            SessionManager.saveSession(this, email, checkBoxRemeberMe.isChecked(), user.getId(),password,user.getName(),user.getEmailver(),user.getRemeber(),user.getCreated(),user.getUpdated());
+            SessionManager.saveSession(this, email, checkBoxRemeberMe.isChecked(), user.getId(),password,user.getName(),user.getEmail_verified_at(),user.getRemember_token(),user.getCreated_at(),user.getUpdated_at());
             MainActivity.startActivity(this);
 
         } else {

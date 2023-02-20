@@ -41,7 +41,7 @@ public class CategoryViewModel extends AndroidViewModel {
         this.repository.createCategoryAPI(category);
     }
     public void updateCategoryApi(Category category){
-        this.repository.updateCategory(category);
+        this.repository.updateCategoryAPI(category);
     }
 
 

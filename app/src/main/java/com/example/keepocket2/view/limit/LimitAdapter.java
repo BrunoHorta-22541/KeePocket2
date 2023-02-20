@@ -36,7 +36,7 @@ public class LimitAdapter extends RecyclerView.Adapter<LimitAdapter.LimitViewHol
         Category category =this.categoryList.get(position);
 
         holder.setLimitCategoryName(category.getCategoryName());
-        holder.setLimitValue(category.getLimit());
+        holder.setLimitValue(Integer.parseInt(category.getLimit()));
         holder.rootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

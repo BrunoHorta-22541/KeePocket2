@@ -37,7 +37,7 @@ public class EspenseFragmentDetails extends Fragment implements AdapterView.OnIt
     private long categoryId;
     private String spinnerStringValue;
     ArrayAdapter<String> spinnerAdapter;
-    private long originalInsertDate;
+    private String originalInsertDate;
     private Button edit;
     private NavController navController;
 
@@ -64,11 +64,11 @@ public class EspenseFragmentDetails extends Fragment implements AdapterView.OnIt
 
         categoryList = Database.getInstance(getContext()).getcategoryDAO().getUserCategoryName(userId);
         movements = Database.getInstance(getContext()).getmovementsDAO().getById(expenseMovementId);
-        categoryId = movements.getIdCategory();
+        categoryId = Integer.parseInt(movements.getIdCategory());
         Category category = Database.getInstance(getContext()).getcategoryDAO().getById(categoryId);
         spinnerStringValue = category.getCategoryName();
         this.descriptionExpense.setText(movements.getDescription());
-        int positive = movements.getValue() * (-1);
+        int positive = Integer.parseInt(movements.getValue()) * (-1);
         String stringValueExpenses = Integer.toString(positive);
         this.valueExpense.setText(stringValueExpenses);
         this.originalInsertDate = movements.getMovementsDate();
@@ -86,7 +86,7 @@ public class EspenseFragmentDetails extends Fragment implements AdapterView.OnIt
             int valueExpenseInt = Integer.parseInt(valueExpenseString);
             int valueExpenseNegative= valueExpenseInt * (-1);
             Category categoryfedit = Database.getInstance(getContext()).getcategoryDAO().getCategoryByName(userId, itemSelected);
-            Movement movements = new Movement(this.movements.getIdMovement(), userId, categoryfedit.getIdCategory(),valueExpenseNegative, description, originalInsertDate);
+            Movement movements = new Movement(this.movements.getIdMovement(), String.valueOf(userId), String.valueOf(categoryfedit.getIdCategory()),String.valueOf(valueExpenseNegative), description, originalInsertDate);
             Database.getInstance(getContext()).getmovementsDAO().update(movements);
             NavDirections action = EspenseFragmentDetailsDirections.actionEspenseFragmentDetailsToExpenseFragment();
             navController.navigate(action);

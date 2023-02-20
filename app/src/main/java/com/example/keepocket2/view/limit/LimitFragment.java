@@ -100,7 +100,7 @@ public class LimitFragment extends Fragment implements LimitAdapter.LimitAdapter
             public void onClick(DialogInterface dialogInterface, int i) {
                 // Código a ser executado quando o utilizador clica em Delete
                 Category categoryname = Database.getInstance(LimitFragment.this.getContext()).getcategoryDAO().getById(categoryId);
-                Category category = new Category(categoryId,categoryname.getCategoryName(),0,userId);
+                Category category = new Category(categoryId,categoryname.getCategoryName(),"0",String.valueOf(userId));
                 LimitFragment.this.viewModel.updateCategoryApi(category);
             }
         });

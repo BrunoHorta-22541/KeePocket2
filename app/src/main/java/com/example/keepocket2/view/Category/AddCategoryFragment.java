@@ -66,7 +66,7 @@ public class AddCategoryFragment extends Fragment {
                 // TODO dar erro
             } else {
                 try{
-                    Category category = new Category(0,nameCategory,0,userId);
+                    Category category = new Category(0,nameCategory,"0",String.valueOf(userId));
                     this.viewModel.createCategoryApi(category);
                     NavDirections action = AddCategoryFragmentDirections.actionAddCategoryFragmentToCategoryFragment();
                     navController.navigate(action);

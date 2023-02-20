@@ -4,16 +4,19 @@ import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import com.google.gson.annotations.SerializedName;
+
 @Entity
 public class Category {
 
     @PrimaryKey(autoGenerate = true)
+    @SerializedName("id")
     private long idCategory;
-    private long idUser;
+    private String idUser;
     private String categoryName;
-    private int limit;
+    private String limit;
 
-    public Category(long idCategory, String categoryName, int limit, long idUser){
+    public Category(long idCategory, String categoryName, String limit, String idUser){
         this.idCategory = idCategory;
         this.categoryName = categoryName;
         this.limit = limit;
@@ -28,11 +31,11 @@ public class Category {
         return categoryName;
     }
 
-    public int getLimit() {
+    public String getLimit() {
         return limit;
     }
 
-    public long getIdUser() {
+    public String getIdUser() {
         return idUser;
     }
 

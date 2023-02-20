@@ -10,21 +10,21 @@ public class User{
     private long id;
     private String email;
     private String name;
-    private String emailver;
-    private String remeber;
-    private long created;
-    private long updated;
+    private String email_verified_at;
+    private String remember_token;
+    private String created_at;
+    private String updated_at;
     private String password;
 
 
-    public User(long id, String name,String email, String emailver,String password, String remeber, long created, long updated) {
+    public User(long id, String name,String email, String email_verified_at,String password, String remember_token, String created_at, String updated_at) {
         this.id = id;
         this.email = email;
         this.name = name;
-        this.emailver = emailver;
-        this.remeber = remeber;
-        this.created = created;
-        this.updated = updated;
+        this.email_verified_at = email_verified_at;
+        this.remember_token = remember_token;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
         this.password = password;
     }
 
@@ -44,19 +44,21 @@ public class User{
         return name;
     }
 
-    public String getEmailver() {
-        return emailver;
+    public String getEmail_verified_at() {
+        return email_verified_at;
     }
 
-    public String getRemeber() {
-        return remeber;
+    public String getRemember_token() {
+        return remember_token;
     }
 
-    public long getCreated() {
-        return created;
+    public String getCreated_at() {
+        return created_at;
     }
 
-    public long getUpdated() {
-        return updated;
+    public String getUpdated_at() {
+        return updated_at;
     }
+
+
 }

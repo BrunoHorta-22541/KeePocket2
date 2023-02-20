@@ -19,11 +19,11 @@ public interface MovementService {
     Call<List<Movement>> getMovementList();
 
     @POST("Movement")
-    Call<Category> createMovement(@Body Category newCategory);
+    Call<Movement> createMovement(@Body Movement newMovement);
 
     @PUT("Movements/{movementId}")
-    Call<Category> updateMovement(@Body Category updatedCategory, @Path("movementId") int categoryId);
+    Call<Movement> updateMovement(@Body Movement updatedMovement, @Path("movementId") long movementId);
 
     @DELETE("Movements/{movementId}")
-    Call<Category> deleteMovements(@Path("movementId") int categoryId);
+    Call<Movement> deleteMovements(@Path("movementId") long movementId);
 }

@@ -41,8 +41,8 @@ public class ExpensesAdapter extends RecyclerView.Adapter<ExpensesAdapter.Expens
 
         holder.setDescription(movements.getDescription());
         holder.setMovementsDate(movements.getMovementsDate());
-        holder.setMovementsvalue(movements.getValue());
-        holder.setMovementsCategoryId(movements.getIdCategory());
+        holder.setMovementsvalue(Integer.parseInt(movements.getValue()));
+        holder.setMovementsCategoryId(Integer.parseInt(movements.getIdCategory()));
 
         holder.rootView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,8 +89,9 @@ public class ExpensesAdapter extends RecyclerView.Adapter<ExpensesAdapter.Expens
         public void setDescription(String description){
             this.description.setText(description);
         }
-        public void setMovementsDate(long movementsDate){
-            Date date = new Date(movementsDate);
+        public void setMovementsDate(String movementsDate){
+            long time= Long.parseLong(movementsDate);
+            Date date = new Date(time);
             this.movementsDate.setText(dates.format(date));
         }
         public void setMovementsvalue(int movementsvalue){

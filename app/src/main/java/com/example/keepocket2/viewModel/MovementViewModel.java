@@ -25,6 +25,9 @@ public class MovementViewModel extends AndroidViewModel {
     public LiveData<List<Movement>> getExpenseById(long movementID){
         return this.repository.getExpenseFromId(movementID);
     }
+    public LiveData<List<Movement>> getExpenseByIdGroup(long movementID){
+        return this.repository.getExpenseFromIdGroup(movementID);
+    }
     public LiveData<List<Movement>> getIncomeById(long movementID){
         return this.repository.getIncomeFromId(movementID);
     }
