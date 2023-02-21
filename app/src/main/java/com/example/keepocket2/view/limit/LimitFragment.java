@@ -67,7 +67,6 @@ public class LimitFragment extends Fragment implements LimitAdapter.LimitAdapter
     @Override
     public void onStart() {
         super.onStart();
-        this.viewModel.refreshTicket();
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

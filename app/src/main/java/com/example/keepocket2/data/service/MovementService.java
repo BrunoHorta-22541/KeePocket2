@@ -1,5 +1,6 @@
 package com.example.keepocket2.data.service;
 
+import com.example.keepocket2.data.APIResponse;
 import com.example.keepocket2.data.Category;
 import com.example.keepocket2.data.Movement;
 
@@ -15,15 +16,15 @@ import retrofit2.http.Path;
 
 public interface MovementService {
 
-    @GET("Movement")
-    Call<List<Movement>> getMovementList();
+    @GET("movements")
+    Call<APIResponse<Movement>> getMovementList();
 
-    @POST("Movement")
-    Call<Movement> createMovement(@Body Movement newMovement);
+    @POST("movements")
+    Call<Movement> createMovement(@Body Movement movement);
 
-    @PUT("Movements/{movementId}")
+    @PUT("movements/{movementId}")
     Call<Movement> updateMovement(@Body Movement updatedMovement, @Path("movementId") long movementId);
 
-    @DELETE("Movements/{movementId}")
+    @DELETE("movements/{movementId}")
     Call<Movement> deleteMovements(@Path("movementId") long movementId);
 }

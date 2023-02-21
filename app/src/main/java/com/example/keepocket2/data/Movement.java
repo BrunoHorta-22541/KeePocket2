@@ -2,15 +2,20 @@ package com.example.keepocket2.data;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.google.gson.annotations.SerializedName;
+
 @Entity
 public class Movement {
 
     @PrimaryKey(autoGenerate = true)
+    @SerializedName("id")
     private long idMovement;
     private String idUser;
     private String idCategory;
     private String value;
     private String description;
+
+    @SerializedName("movementsdate")
     private String movementsDate;
 
 

@@ -1,5 +1,6 @@
 package com.example.keepocket2.data.service;
 
+import com.example.keepocket2.data.APIResponse;
 import com.example.keepocket2.data.Category;
 
 import java.util.List;
@@ -15,7 +16,7 @@ import retrofit2.http.Path;
 public interface CategoryService {
 
     @GET("categories")
-    Call<List<Category>> getCategoryList();
+    Call<APIResponse<Category>> getCategoryList();
 
     @POST("categories")
     Call<Category> createCategory(@Body Category category);

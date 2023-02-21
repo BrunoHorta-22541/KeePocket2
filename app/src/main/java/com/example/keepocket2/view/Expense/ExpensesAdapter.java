@@ -1,12 +1,14 @@
 package com.example.keepocket2.view.Expense;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.keepocket2.R;
@@ -14,7 +16,9 @@ import com.example.keepocket2.data.Category;
 import com.example.keepocket2.data.Movement;
 import com.example.keepocket2.data.localDatabase.Database;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -89,10 +93,12 @@ public class ExpensesAdapter extends RecyclerView.Adapter<ExpensesAdapter.Expens
         public void setDescription(String description){
             this.description.setText(description);
         }
-        public void setMovementsDate(String movementsDate){
-            long time= Long.parseLong(movementsDate);
-            Date date = new Date(time);
-            this.movementsDate.setText(dates.format(date));
+        public void setMovementsDate(String movementsDate) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date date = new Date();
+            String formattedDate = dateFormat.format(date);
+            this.movementsDate.setText(formattedDate);
+
         }
         public void setMovementsvalue(int movementsvalue){
             String stringValueExpenses = Integer.toString(movementsvalue);

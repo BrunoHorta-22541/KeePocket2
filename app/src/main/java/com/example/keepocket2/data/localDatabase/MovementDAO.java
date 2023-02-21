@@ -18,7 +18,16 @@ public interface MovementDAO {
     List<Movement> getAll();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void createMovements(List<Movement> movement);
+    void createMovements(List<Movement> movements);
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    void insertMovement(Movement movement);
+
+    default void createOrUpdateMovements(List<Movement> movements) {
+        for (Movement movement : movements) {
+            insertMovement(movement);
+        }
+    }
 
     @Query("SELECT * FROM movement  WHERE idMovement = :movementsId")
     Movement getById(long movementsId);

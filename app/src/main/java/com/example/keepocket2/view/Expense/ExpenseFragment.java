@@ -106,6 +106,6 @@ public class ExpenseFragment extends Fragment implements ExpensesAdapter.Expense
     @Override
     public void onStart() {
         super.onStart();
-        this.viewModel.refreshTicket();
+
     }
 }

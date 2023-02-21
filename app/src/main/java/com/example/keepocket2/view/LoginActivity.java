@@ -18,6 +18,7 @@ import com.example.keepocket2.data.User;
 import com.example.keepocket2.view.Session.LoginManager;
 import com.example.keepocket2.view.Session.SessionManager;
 import com.example.keepocket2.viewmodel.CategoryViewModel;
+import com.example.keepocket2.viewmodel.MovementViewModel;
 import com.example.keepocket2.viewmodel.UserViewModel;
 
 import androidx.lifecycle.ViewModelProvider;
@@ -25,7 +26,9 @@ public class LoginActivity extends AppCompatActivity {
     private EditText editTextEmail;
     private EditText editTextPassword;
     private CheckBox checkBoxRemeberMe;
-    private UserViewModel viewModel;
+    private UserViewModel userViewModel;
+    private MovementViewModel movementViewModel;
+    private CategoryViewModel categoryViewModel;
     public static void startActivity(Context context) {
         context.startActivity(new Intent(context, LoginActivity.class));
     }
@@ -38,8 +41,10 @@ public class LoginActivity extends AppCompatActivity {
         this.editTextPassword = findViewById(R.id.editTextPassword);
         this.checkBoxRemeberMe = findViewById(R.id.checkBoxRemeberMe);
         LoginManager loginManager = new LoginManager(getApplication());
-        this.viewModel = new UserViewModel(this.getApplication());
-        viewModel.refreshUser();
+        this.userViewModel = new UserViewModel(this.getApplication());
+        this.categoryViewModel = new CategoryViewModel(this.getApplication());
+        this.movementViewModel = new MovementViewModel(this.getApplication());
+        userViewModel.refreshUser();
     }
 
     @Override

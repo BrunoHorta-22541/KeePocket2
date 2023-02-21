@@ -82,7 +82,6 @@ public class CategoryFragment extends Fragment implements CategoryAdapter.Catego
     @Override
     public void onStart() {
         super.onStart();
-        this.viewModel.refreshTicket();
     }
 
   /*  public void updateCategoryList(){

@@ -104,6 +104,6 @@ public class IncomeFragment extends Fragment implements IncomeAdapter.IncomeAdap
     @Override
     public void onStart() {
         super.onStart();
-        this.viewModel.refreshTicket();
+
     }
 }

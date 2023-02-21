@@ -33,7 +33,7 @@ public class CategoryViewModel extends AndroidViewModel {
     }
 
 
-    public void refreshTicket(){
+    public void refreshCategory(){
         this.repository.refreshCategory();
     }
 

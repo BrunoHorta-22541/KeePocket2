@@ -1,8 +1,11 @@
 package com.example.keepocket2.view.Expense;
 
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
 import androidx.navigation.fragment.NavHostFragment;
@@ -23,7 +26,12 @@ import com.example.keepocket2.data.Movement;
 import com.example.keepocket2.data.User;
 import com.example.keepocket2.data.localDatabase.Database;
 import com.example.keepocket2.view.Session.SessionManager;
+import com.example.keepocket2.viewmodel.MovementViewModel;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,12 +45,14 @@ public class AddExpenseFragment extends Fragment implements AdapterView.OnItemSe
     ArrayAdapter<String> spinnerAdapter;
     private Button save;
     private NavController navController;
+    private MovementViewModel viewModel;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -50,6 +60,7 @@ public class AddExpenseFragment extends Fragment implements AdapterView.OnItemSe
         View root = inflater.inflate(R.layout.fragment_add_expense, container, false);
         navController = NavHostFragment.findNavController(AddExpenseFragment.this);
         User activeSession = SessionManager.getActiveSession(getContext());
+        this.viewModel = new ViewModelProvider(this).get(MovementViewModel.class);
         userId = activeSession.getId();
         this.descriptionExpense = root.findViewById(R.id.editTextExpenseDescription);
         this.spinner = root.findViewById(R.id.expenseCategorySpinner);
@@ -69,8 +80,17 @@ public class AddExpenseFragment extends Fragment implements AdapterView.OnItemSe
             int valueExpenseInt = Integer.parseInt(valueExpenseString);
             Category category = Database.getInstance(getContext()).getcategoryDAO().getCategoryByName(userId, itemSelected);
             int valueExpenseNegative= valueExpenseInt * (-1);
-            Movement movements = new Movement(0, String.valueOf(userId), String.valueOf(category.getIdCategory()),String.valueOf(valueExpenseNegative), description, String.valueOf(System.currentTimeMillis()));
-            Database.getInstance(getContext()).getmovementsDAO().insert(movements);
+            String dateString = String.valueOf(System.currentTimeMillis());
+            long millis = Long.parseLong(dateString); // parse the string value as a long value
+
+            Instant instant = Instant.ofEpochMilli(millis); // create an Instant from the millis value
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"); // define a formatter for the output
+
+            LocalDateTime localDateTime = instant.atZone(ZoneId.systemDefault()).toLocalDateTime(); // convert the Instant to a LocalDateTime in the default time zone
+            String output = formatter.format(localDateTime); // format the LocalDateTime as a string using the formatter
+            Movement movements = new Movement(0, String.valueOf(userId), String.valueOf(category.getIdCategory()),String.valueOf(valueExpenseNegative), description, output);
+            this.viewModel.createMovementApi(movements);
             NavDirections action = AddExpenseFragmentDirections.actionAddExpenseFragmentToExpenseFragment();
             navController.navigate(action);
         });

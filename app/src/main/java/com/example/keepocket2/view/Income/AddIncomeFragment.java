@@ -1,8 +1,11 @@
 package com.example.keepocket2.view.Income;
 
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
 import androidx.navigation.fragment.NavHostFragment;
@@ -22,8 +25,16 @@ import com.example.keepocket2.data.Category;
 import com.example.keepocket2.data.Movement;
 import com.example.keepocket2.data.User;
 import com.example.keepocket2.data.localDatabase.Database;
+import com.example.keepocket2.view.Category.AddCategoryFragmentDirections;
 import com.example.keepocket2.view.Session.SessionManager;
+import com.example.keepocket2.viewmodel.CategoryViewModel;
+import com.example.keepocket2.viewmodel.MovementViewModel;
+import com.example.keepocket2.viewmodel.UserViewModel;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,13 +49,14 @@ public class AddIncomeFragment extends Fragment implements AdapterView.OnItemSel
     private List<String> categoryList;
     private String itemSelected;
     ArrayAdapter<String> spinnerAdapter;
-    private User activeSession;
+    private MovementViewModel viewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -52,6 +64,7 @@ public class AddIncomeFragment extends Fragment implements AdapterView.OnItemSel
         View root= inflater.inflate(R.layout.fragment_add_income, container, false);
         NavController navController = NavHostFragment.findNavController(com.example.keepocket2.view.Income.AddIncomeFragment.this);
         User activeSession = SessionManager.getActiveSession(getContext());
+        this.viewModel = new ViewModelProvider(this).get(MovementViewModel.class);
         userId = activeSession.getId();
         this.editTextDescription = root.findViewById(R.id.editTextIncomeDescription);
         this.spinnerIncome = root.findViewById(R.id.incomeCategorySpinner);
@@ -68,11 +81,18 @@ public class AddIncomeFragment extends Fragment implements AdapterView.OnItemSel
             String description = this.editTextDescription.getText().toString();
             String valueIncomeString = this.editTextValue.getText().toString();
             int valueIncomeInt = Integer.parseInt(valueIncomeString);
+            String dateString = String.valueOf(System.currentTimeMillis());
+            long millis = Long.parseLong(dateString); // parse the string value as a long value
+
+            Instant instant = Instant.ofEpochMilli(millis); // create an Instant from the millis value
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"); // define a formatter for the output
+
+            LocalDateTime localDateTime = instant.atZone(ZoneId.systemDefault()).toLocalDateTime(); // convert the Instant to a LocalDateTime in the default time zone
+            String output = formatter.format(localDateTime); // format the LocalDateTime as a string using the formatter
             Category category = Database.getInstance(getContext()).getcategoryDAO().getCategoryByName(userId, itemSelected);
-
-            Movement movements = new Movement(0, String.valueOf(userId), String.valueOf(category.getIdCategory()), String.valueOf(valueIncomeInt), description, String.valueOf(System.currentTimeMillis()));
-            Database.getInstance(getContext()).getmovementsDAO().insert(movements);
-
+            Movement movements = new Movement(0, String.valueOf(userId), String.valueOf(category.getIdCategory()), String.valueOf(valueIncomeInt), description, output);
+            this.viewModel.createMovementApi(movements);
             NavDirections action= AddIncomeFragmentDirections.actionAddIncomeFragmentToIncomeFragment2();
             navController.navigate(action);
         });

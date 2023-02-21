@@ -9,6 +9,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.keepocket2.data.Category;
+import com.example.keepocket2.data.User;
 
 import java.util.List;
 @Dao
@@ -18,6 +19,7 @@ public interface CategoryDAO {
 
     @Query("SELECT * FROM Category WHERE idCategory = :categoryId")
     Category getById(long categoryId);
+
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void createCategorys(List<Category> category);

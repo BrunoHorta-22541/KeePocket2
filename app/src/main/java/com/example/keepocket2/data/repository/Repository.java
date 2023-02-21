@@ -20,7 +20,10 @@ import com.example.keepocket2.data.service.CategoryService;
 import com.example.keepocket2.data.service.MovementService;
 import com.example.keepocket2.data.service.UserService;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.logging.Logger;
@@ -76,9 +79,7 @@ public class Repository {
         return this.movementDAO.getIncome(userId);
     }
 
-    public void createCategory(Category category){
-     executor.execute(() -> categoryDAO.insertCategory(category));
-    }
+
     public void updateCategory(Category category){
         executor.execute(() -> categoryDAO.updateCategory(category));
     }
@@ -128,6 +129,66 @@ public class Repository {
 
             @Override
             public void onFailure(Call<APIResponse<User>> call, Throwable t) {
+                t.printStackTrace();
+                //Toast.makeText(mContext, "Error fetching data: " + t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+    public void refreshCategory() {
+        this.categoryService.getCategoryList().enqueue(new Callback<APIResponse<Category>>() {
+            @Override
+            public void onResponse(Call<APIResponse<Category>> call, Response<APIResponse<Category>> response) {
+                if (response.isSuccessful()) {
+                    APIResponse<Category> apiResponse = response.body();
+                    if (apiResponse != null) {
+                        List<Category> categoryList = apiResponse.getData();
+                        if (categoryList != null) {
+                            Log.d(TAG, "Received " + categoryList.size() + " Categories");
+                            executor.execute(() -> categoryDAO.createCategorys(categoryList));
+                        } else {
+                            Log.d(TAG, "Received null Categories list");
+                        }
+                    } else {
+                        Log.d(TAG, "Received null API response");
+                    }
+                } else {
+                    Log.d(TAG, "Response code: " + response.code());
+                    //Toast.makeText(mContext, "Error fetching data: " + response.code(), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse<Category>> call, Throwable t) {
+                t.printStackTrace();
+                //Toast.makeText(mContext, "Error fetching data: " + t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+    public void refreshMovement() {
+        this.movementService.getMovementList().enqueue(new Callback<APIResponse<Movement>>() {
+            @Override
+            public void onResponse(Call<APIResponse<Movement>> call, Response<APIResponse<Movement>> response) {
+                if (response.isSuccessful()) {
+                    APIResponse<Movement> apiResponse = response.body();
+                    if (apiResponse != null) {
+                        List<Movement> movementList = apiResponse.getData();
+                        if (movementList != null) {
+                            Log.d(TAG, "Received " + movementList.size() + " Categories");
+                            executor.execute(() -> movementDAO.createOrUpdateMovements(movementList));
+                        } else {
+                            Log.d(TAG, "Received null Categories list");
+                        }
+                    } else {
+                        Log.d(TAG, "Received null API response");
+                    }
+                } else {
+                    Log.d(TAG, "Response code: " + response.code());
+                    //Toast.makeText(mContext, "Error fetching data: " + response.code(), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<APIResponse<Movement>> call, Throwable t) {
                 t.printStackTrace();
                 //Toast.makeText(mContext, "Error fetching data: " + t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
             }
@@ -208,42 +269,10 @@ public class Repository {
             }
         });
     }
-    public void refreshCategory() {
 
-        this.categoryService.getCategoryList().enqueue(new Callback<List<Category>>() {
-            @Override
-            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
-                if(response.isSuccessful()){
-                    executor.execute(() -> categoryDAO.createCategorys(response.body()));
-                }
-            }
+    public void createMovementAPI(Movement movement){
 
-            @Override
-            public void onFailure(Call<List<Category>> call, Throwable t) {
-
-            }
-        });
-    }
-
-    public void refreshMovement(){
-        this.movementService.getMovementList().enqueue(new Callback<List<Movement>>() {
-            @Override
-            public void onResponse(Call<List<Movement>> call, Response<List<Movement>> response) {
-                if(response.isSuccessful()){
-                    executor.execute(() -> movementDAO.createMovements(response.body()));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Movement>> call, Throwable t) {
-
-            }
-        });
-    }
-    public void createMovementsAPI(Movement movement){
-        Movement movementOut = new Movement(movement.getIdMovement(),movement.getIdUser(),movement.getIdCategory(),movement.getValue(),movement.getDescription(),movement.getMovementsDate());
-
-        // insert the new movement using the API
+        Movement movementOut = new Movement(movement.getIdMovement(),String.valueOf(movement.getIdUser()),String.valueOf(movement.getIdCategory()),String.valueOf(movement.getValue()),movement.getDescription(),movement.getMovementsDate());
         this.movementService.createMovement(movementOut).enqueue(new Callback<Movement>() {
             @Override
             public void onResponse(Call<Movement> call, Response<Movement> response) {

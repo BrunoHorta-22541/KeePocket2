@@ -31,11 +31,11 @@ public class MovementViewModel extends AndroidViewModel {
     public LiveData<List<Movement>> getIncomeById(long movementID){
         return this.repository.getIncomeFromId(movementID);
     }
-    public void refreshTicket(){
+    public void refreshMovements(){
         this.repository.refreshMovement();
     }
-    public void createMovementApi(Category category){
-        this.repository.createCategory(category);
+    public void createMovementApi(Movement movement){
+        this.repository.createMovementAPI(movement);
     }
     public void updateMovementApi(Category category){
         this.repository.updateCategory(category);

@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.example.keepocket2.viewmodel.CategoryViewModel;
+import com.example.keepocket2.viewmodel.MovementViewModel;
 import com.example.keepocket2.viewmodel.UserViewModel;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -53,8 +54,9 @@ private ArrayList<PieEntry> pieEntries;
 private Map<String, Integer> expensesDataDataset = new HashMap<>();
 private AlertDialog alertDialog;
 private NavController navController;
-private com.example.keepocket2.viewmodel.MovementViewModel viewModel;
 
+private MovementViewModel movementViewModel;
+private CategoryViewModel categoryViewModel;
 private long userId;
 
     @Override
@@ -71,8 +73,8 @@ private long userId;
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         User activeSession = SessionManager.getActiveSession(getContext());
         userId = activeSession.getId();
-
-        this.viewModel = new ViewModelProvider(this).get(com.example.keepocket2.viewmodel.MovementViewModel.class);
+        this.movementViewModel = new ViewModelProvider(this).get(MovementViewModel.class);
+        this.categoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
         textView = root.findViewById(R.id.textViewUsername);
         textView.setText(activeSession.getEmail());
         if (!SessionManager.sessionExists(getContext())) {
@@ -126,7 +128,7 @@ private long userId;
         return root;
     }
     private void fillExpensesArrayList() {
-        LiveData<List<Movement>> list = this.viewModel.getExpenseByIdGroup(userId);
+        LiveData<List<Movement>> list = this.movementViewModel.getExpenseByIdGroup(userId);
         ArrayList<LiveData<List<Movement>>> arrayList = new ArrayList<>();
         arrayList.add(list);
     }
@@ -138,4 +140,10 @@ private long userId;
 
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        this.categoryViewModel.refreshCategory();
+        this.movementViewModel.refreshMovements();
+    }
 }
