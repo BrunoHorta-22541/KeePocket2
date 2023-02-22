@@ -16,6 +16,12 @@ import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 
+import com.example.keepocket2.R;
+import com.example.keepocket2.data.User;
+import com.example.keepocket2.data.localDatabase.Database;
+import com.example.keepocket2.view.LoginActivity;
+import com.example.keepocket2.view.Session.SessionManager;
+
 import java.util.Random;
 //codigo baseado no projeto https://github.com/Capa03/Five-Meals
 public class AccountFragment extends Fragment {
@@ -55,22 +61,23 @@ public class AccountFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         this.view = view;
-        ImageView imageView = view.findViewById(R.id.imageViewAccountImage);
-        TextView username = view.findViewById(R.id.textViewAccountUsername);
-        TextView logout = view.findViewById(R.id.textViewAccountLogout);
-        TextView help = view.findViewById(R.id.textViewAccountHelp);
+        TextView username = view.findViewById(R.id.user);
+        TextView logout = view.findViewById(R.id.logout);
+        TextView help = view.findViewById(R.id.help);
 
-        imageView.setImageResource(R.drawable.profile_picture);
-        String user = SessionManager.getActiveSession(this.context);
-        username.setText(user);
+        User activeSession = SessionManager.getActiveSession(getContext());
+        long userId = activeSession.getId();
+        User getemail= Database.getInstance(this.context).getuserDAO().getById(userId);
+        String email = getemail.getEmail();
+        User userActive = Database.getInstance(this.context).getuserDAO().getByEmail(email);
+        username.setText(email);
 
-        User userActive = AppDataBase.getInstance(this.context).getUserDAO().getUserByUsername(user);
-        email.setText(userActive.getEmail());
 
-        password.setOnClickListener(new View.OnClickListener() {
+        username.setText(userActive.getEmail());
+        help.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                NavDirections action = (NavDirections) AccountFragmentDirections.actionAccountFragmentToChangePasswordFragment2();
+            public void onClick(View v) {
+                NavDirections action = (NavDirections) AccountFragmentDirections.actionAccountFragmentToHelpFragment();
                 Navigation.findNavController(view).navigate(action);
             }
         });
@@ -80,15 +87,7 @@ public class AccountFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 SessionManager.clearSession(context);
-                PreLoginActivity.startActivity(context);
-            }
-        });
-
-        help.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavDirections action = (NavDirections) AccountFragmentDirections.actionAccountFragmentToHelpFragment();
-                Navigation.findNavController(view).navigate(action);
+                LoginActivity.startActivity(context);
             }
         });
     }

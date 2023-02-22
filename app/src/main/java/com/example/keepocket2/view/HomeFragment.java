@@ -76,7 +76,7 @@ private long userId;
         this.movementViewModel = new ViewModelProvider(this).get(MovementViewModel.class);
         this.categoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
         textView = root.findViewById(R.id.textViewUsername);
-        textView.setText(activeSession.getEmail());
+        textView.setText(activeSession.getName());
         if (!SessionManager.sessionExists(getContext())) {
             navController = NavHostFragment.findNavController(HomeFragment.this);
         }
@@ -85,9 +85,10 @@ private long userId;
         pieEntries = new ArrayList<>();
         fillExpensesArrayList();
 
-        for (Map.Entry<String, Integer> entry : expensesDataDataset.entrySet()){
+        for (Map.Entry<String, Integer> entry : expensesDataDataset.entrySet()) {
             pieEntries.add(new PieEntry(entry.getValue(), entry.getKey()));
         }
+
         PieDataSet pieDataSet = new PieDataSet(pieEntries, "Month Expenses");
         pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         pieDataSet.setValueTextSize(16);
@@ -95,18 +96,17 @@ private long userId;
         pieChart.setData(pieData);
         Legend legend = pieChart.getLegend();
         legend.setTextSize(13);
-        legend.setTextColor(com.google.android.material.R.color.design_default_color_primary_dark);
+        legend.setTextColor(R.color.colorText);
         legend.setWordWrapEnabled(true);
         pieChart.animateXY(2000, 2000);
         pieChart.invalidate();
-
         pieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
 
             @Override
             public void onValueSelected(Entry e, Highlight h) {
                 String label =((PieEntry)e).getLabel();
                 int value = expensesDataDataset.get(label);
-                androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getContext());
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setCancelable(true);
                 String sales = NumberFormat.getCurrencyInstance().format(value);
                 View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_pie_chart_detail, null);
@@ -118,19 +118,19 @@ private long userId;
                 alertDialog = builder.create();
                 alertDialog.show();
             }
-
             @Override
             public void onNothingSelected() {
 
             }
-
         });
         return root;
     }
     private void fillExpensesArrayList() {
-        LiveData<List<Movement>> list = this.movementViewModel.getExpenseByIdGroup(userId);
-        ArrayList<LiveData<List<Movement>>> arrayList = new ArrayList<>();
-        arrayList.add(list);
+        expensesDataDataset.put("Gaming", 15);
+        expensesDataDataset.put("Saúde", 55);
+        expensesDataDataset.put("Luz", 60);
+        expensesDataDataset.put("Água", 30);
+        expensesDataDataset.put("Alimentação", 150);
     }
 
 

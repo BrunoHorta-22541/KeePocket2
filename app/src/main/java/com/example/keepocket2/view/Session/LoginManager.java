@@ -26,6 +26,7 @@ public class LoginManager {
 
     public static User validateUser(String email, String password) {
         User user;
+
         user = userDAO.getByEmail(email);
 
         String hashDeSenhaArmazenadoNoBD = user.getPassword();

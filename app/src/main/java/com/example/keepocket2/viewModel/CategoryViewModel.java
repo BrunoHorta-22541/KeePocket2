@@ -25,6 +25,11 @@ public class CategoryViewModel extends AndroidViewModel {
     public LiveData<List<Category>> getCategoryById(long categoryID){
         return this.repository.getCategoryFromId(categoryID);
     }
+    public LiveData<List<Category>> getAllCategories(){
+        return this.repository.getALL();
+    }
+
+
     public LiveData<List<Category>> getCategoryLimitById(long categoryID){
         return this.repository.getCategoryLimitFromId(categoryID);
     }

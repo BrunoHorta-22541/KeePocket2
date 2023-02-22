@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
             SessionManager.saveSession(this, email, checkBoxRemeberMe.isChecked(), user.getId(),password,user.getName(),user.getEmail_verified_at(),user.getRemember_token(),user.getCreated_at(),user.getUpdated_at());
             MainActivity.startActivity(this);
 
-        } else {
+        } else if(user == null) {
             // mostrar erro
             Toast.makeText(this, "Credenciais inválidas", Toast.LENGTH_LONG).show();
         }

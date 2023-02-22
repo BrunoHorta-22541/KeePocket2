@@ -6,21 +6,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".account.HelpFragment">
-    <include
-        android:id="@+id/include4"
-        layout="@layout/top_bar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
         android:layout_height="80dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include4">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/textView19"

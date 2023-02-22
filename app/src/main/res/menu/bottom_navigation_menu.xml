@@ -2,10 +2,7 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/homeFragment"
-        android:icon="@drawable/homeicon"
-        android:title="Home" />
+
     <item
         android:id="@+id/categoryFragment"
         android:icon="@drawable/categoryicon"
@@ -25,7 +22,7 @@
     <item
         android:id="@+id/accountFragment"
         android:icon="@android:drawable/ic_menu_myplaces"
-        android:title="Perfil" />
+        android:title="Profile" />
 
 
 </menu>

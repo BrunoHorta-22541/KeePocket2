@@ -26,6 +26,13 @@ public interface CategoryDAO {
 
     @Query("SELECT * FROM Category WHERE idUser = :userId")
     LiveData<List<Category>> getUserCategories(long userId);
+    @Query("SELECT * FROM Category")
+    LiveData<List<Category>> getALLCategories();
+
+
+    @Query("SELECT * FROM Category WHERE idUser = :userId")
+    Category getCategoriesfromID(long userId);
+
 
 
     @Query("SELECT categoryName FROM Category WHERE idUser = :userId")
