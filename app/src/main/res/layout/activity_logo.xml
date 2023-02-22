@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#2E2E2D"
-    android:backgroundTint="#2E2E2D">
+    android:backgroundTint="#2E2E2D"
+    tools:context=".view.LoginActivity">
 
 
     <ImageView
