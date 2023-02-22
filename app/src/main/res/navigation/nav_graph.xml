@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_homeFragment_to_expenseFragment"
             app:destination="@id/expenseFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_accountFragment"
+            app:destination="@id/accountFragment" />
     </fragment>
     <fragment
         android:id="@+id/categoryFragment"
@@ -176,4 +179,9 @@
             android:id="@+id/action_espenseFragmentDetails_to_expenseFragment"
             app:destination="@id/expenseFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="com.example.keepocket2.account.AccountFragment"
+        android:label="fragment_account"
+        tools:layout="@layout/fragment_account" />
 </navigation>
