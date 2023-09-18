@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout9"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.Income.IncomeDetailsFragment">
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="@color/colorText"
+        android:text="@string/update"
+        android:textColor="#5C5C5C"
+        app:layout_constraintEnd_toEndOf="@+id/editTextIncomeDetailsValue"
+        app:layout_constraintStart_toStartOf="@+id/editTextIncomeDetailsValue"
+        app:layout_constraintTop_toBottomOf="@+id/editTextIncomeDetailsValue" />
+
+    <EditText
+        android:id="@+id/editTextIncomeDetailsValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:hint="@string/value"
+        android:inputType="number"
+        android:textColorHint="@color/colorText"
+        app:layout_constraintEnd_toEndOf="@+id/incomeDetailsCategorySpinner"
+        app:layout_constraintStart_toStartOf="@+id/incomeDetailsCategorySpinner"
+        app:layout_constraintTop_toBottomOf="@+id/incomeDetailsCategorySpinner" />
+
+    <Spinner
+        android:id="@+id/incomeDetailsCategorySpinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="@+id/editTextIncomeDescriptionDetails"
+        app:layout_constraintStart_toStartOf="@+id/editTextIncomeDescriptionDetails"
+        app:layout_constraintTop_toBottomOf="@+id/editTextIncomeDescriptionDetails" />
+
+    <EditText
+        android:id="@+id/editTextIncomeDescriptionDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:hint="@string/description"
+        android:inputType="textPersonName"
+        android:textColorHint="@color/colorText"
+        app:layout_constraintEnd_toEndOf="@+id/textView17"
+        app:layout_constraintStart_toStartOf="@+id/textView17"
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/detailsIncome"
+        android:textColor="@color/colorText"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

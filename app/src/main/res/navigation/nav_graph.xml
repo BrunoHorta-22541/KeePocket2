@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.keepocket2.view.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_limitFragment2"
+            app:destination="@id/limitFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_incomeFragment2"
+            app:destination="@id/incomeFragment2" />
+        <action
+            android:id="@+id/action_homeFragment_to_expenseFragment"
+            app:destination="@id/expenseFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_accountFragment"
+            app:destination="@id/accountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoryFragment"
+        android:name="com.example.keepocket2.view.Category.CategoryFragment"
+        android:label="CategoryFragment" >
+        <action
+            android:id="@+id/action_categoryFragment_to_categoryDetailsFragment"
+            app:destination="@id/categoryDetailsFragment" />
+        <action
+            android:id="@+id/action_categoryFragment_to_addCategoryFragment"
+            app:destination="@id/addCategoryFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/categoryDetailsFragment"
+        android:name="com.example.keepocket2.view.Category.CategoryDetailsFragment"
+        android:label="fragment_category_details"
+        tools:layout="@layout/fragment_category_details" >
+        <argument
+            android:name="Id"
+            app:argType="long" />
+        <argument
+            android:name="categoryId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_categoryDetailsFragment_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addCategoryFragment"
+        android:name="com.example.keepocket2.view.Category.AddCategoryFragment"
+        android:label="fragment_add_category"
+        tools:layout="@layout/fragment_add_category" >
+        <action
+            android:id="@+id/action_addCategoryFragment_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
+        <argument
+            android:name="userId"
+            app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/limitFragment"
+        android:name="com.example.keepocket2.view.limit.LimitFragment"
+        android:label="fragment_limit"
+        tools:layout="@layout/fragment_limit" >
+        <action
+            android:id="@+id/action_limitFragment2_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_limitFragment2_to_limitDetailsFragment"
+            app:destination="@id/limitDetailsFragment" />
+        <action
+            android:id="@+id/action_limitFragment2_to_addLimitFragment"
+            app:destination="@id/addLimitFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addLimitFragment"
+        android:name="com.example.keepocket2.view.limit.AddLimitFragment"
+        android:label="fragment_add_limit"
+        tools:layout="@layout/fragment_add_limit" >
+        <action
+            android:id="@+id/action_addLimitFragment_to_limitFragment2"
+            app:destination="@id/limitFragment" />
+        <argument
+            android:name="userId"
+            app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/limitDetailsFragment"
+        android:name="com.example.keepocket2.view.limit.LimitDetailsFragment"
+        android:label="fragment_limit_details"
+        tools:layout="@layout/fragment_limit_details" >
+        <action
+            android:id="@+id/action_limitDetailsFragment_to_limitFragment2"
+            app:destination="@id/limitFragment" />
+        <argument
+            android:name="categoryId"
+            app:argType="long" />
+        <argument
+            android:name="userId"
+            app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/addIncomeFragment"
+        android:name="com.example.keepocket2.view.Income.AddIncomeFragment"
+        android:label="fragment_add_income"
+        tools:layout="@layout/fragment_add_income" >
+        <action
+            android:id="@+id/action_addIncomeFragment_to_incomeFragment2"
+            app:destination="@id/incomeFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/incomeDetailsFragment"
+        android:name="com.example.keepocket2.view.Income.IncomeDetailsFragment"
+        android:label="fragment_income_details"
+        tools:layout="@layout/fragment_income_details" >
+        <action
+            android:id="@+id/action_incomeDetailsFragment_to_incomeFragment2"
+            app:destination="@id/incomeFragment2" />
+        <argument
+            android:name="id"
+            app:argType="long" />
+        <argument
+            android:name="userId"
+            app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/incomeFragment2"
+        android:name="com.example.keepocket2.view.Income.IncomeFragment"
+        android:label="fragment_income"
+        tools:layout="@layout/fragment_income" >
+        <action
+            android:id="@+id/action_incomeFragment2_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_incomeFragment2_to_addIncomeFragment"
+            app:destination="@id/addIncomeFragment" />
+        <action
+            android:id="@+id/action_incomeFragment2_to_incomeDetailsFragment"
+            app:destination="@id/incomeDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/expenseFragment"
+        android:name="com.example.keepocket2.view.Expense.ExpenseFragment"
+        android:label="fragment_expense"
+        tools:layout="@layout/fragment_expense" >
+        <action
+            android:id="@+id/action_expenseFragment_to_addExpenseFragment"
+            app:destination="@id/addExpenseFragment" />
+        <action
+            android:id="@+id/action_expenseFragment_to_espenseFragmentDetails"
+            app:destination="@id/espenseFragmentDetails" />
+    </fragment>
+    <fragment
+        android:id="@+id/addExpenseFragment"
+        android:name="com.example.keepocket2.view.Expense.AddExpenseFragment"
+        android:label="fragment_add_expense"
+        tools:layout="@layout/fragment_add_expense" >
+        <action
+            android:id="@+id/action_addExpenseFragment_to_expenseFragment"
+            app:destination="@id/expenseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/espenseFragmentDetails"
+        android:name="com.example.keepocket2.view.Expense.EspenseFragmentDetails"
+        android:label="fragment_espense_details"
+        tools:layout="@layout/fragment_espense_details" >
+        <argument
+            android:name="movementId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_espenseFragmentDetails_to_expenseFragment"
+            app:destination="@id/expenseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="com.example.keepocket2.account.AccountFragment"
+        android:label="fragment_account"
+        tools:layout="@layout/fragment_account" >
+        <action
+            android:id="@+id/action_accountFragment_to_helpFragment"
+            app:destination="@id/helpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/helpFragment"
+        android:name="com.example.keepocket2.account.HelpFragment"
+        android:label="fragment_help"
+        tools:layout="@layout/fragment_help" />
+</navigation>
