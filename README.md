@@ -20,11 +20,8 @@ Neste projeto foi desenvolvida uma aplicação com, o objetivo de gerir as despe
 * Room DataBase;
 
 ### Requisitos Avançados
-* Navegação com drawers;
 * Implementação de notificações;
 * Implementação do QrCode;
-* Validação;
-* Implementação de gráfico das despesas agrupadas por categoria;
 
 ## Lista de Tarefas
 - [x] Login
@@ -34,8 +31,10 @@ Neste projeto foi desenvolvida uma aplicação com, o objetivo de gerir as despe
 - [x] Income Fragment
 - [x] Expenses Fragment
 - [x] Account Fragment
-- [ ] Edits para despesas, rendimentos, limites, categorias
-- [ ] Deletes despesas, rendimentos, limites, categorias
+- [x] Edits para despesas, rendimentos, limites, categorias
+- [x] Deletes despesas, rendimentos, limites, categorias
+- [x] Validação
+- [x] Implementação de gráfico das despesas agrupadas por categoria
 
 ## Links Importantes
 * (https://developer.android.com/training/data-storage/room/)
@@ -51,9 +50,12 @@ Neste projeto foi desenvolvida uma aplicação com, o objetivo de gerir as despe
 * (https://developer.android.com/topic/libraries/architecture/livedata?hl=pt-br)
 * (https://developer.android.com/guide/navigation/navigation-getting-started?hl=pt-br)
 * (https://www.mindrot.org/projects/jBCrypt/)
+* (https://www.tutsmake.com/laravel-9-google-pie-chart-tutorial-example/?utm_content=cmp-true)
+
 
 ## Links Importantes- Youtube
 * (https://www.youtube.com/watch?v=_DFF3OloS-4)
+* (https://www.youtube.com/watch?v=_DFF3OloS-4&t=1s)
 
 ## Aplicações e Tecnologias
 * Android Studio 
