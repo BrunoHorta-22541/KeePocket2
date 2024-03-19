@@ -12,18 +12,27 @@ Neste projeto foi desenvolvida uma aplicação com, o objetivo de gerir as despe
 * Rodrigo Serafim
 
 ## Requisitos
-### Requisitos Minimos
+### Requisitos Minimos Android
 * Comunicação com API Laravel;
 * Fazer sistema de login com database;
 * Inserir dados;
 * Utilização de repositório com LiveData e ViewModel;
 * Room DataBase;
 
-### Requisitos Avançados
+### Requisitos Web
+* Login/ Registo na Web;
+* Visualização de dados;
+* Inserir dados;
+
+
+### Requisitos Avançados Android
 * Implementação de notificações;
 * Implementação do QrCode;
 
-## Lista de Tarefas
+### Requisitos Avançados Web
+* PieChart;
+
+## Lista de Tarefas Android
 - [x] Login
 - [x] Bottom Navigation
 - [x] Home Fragment
@@ -35,6 +44,13 @@ Neste projeto foi desenvolvida uma aplicação com, o objetivo de gerir as despe
 - [x] Deletes despesas, rendimentos, limites, categorias
 - [x] Validação
 - [x] Implementação de gráfico das despesas agrupadas por categoria
+
+## Lista de Tarefas Web
+- [x] Login
+- [x] Inserir dados
+- [x] Visualização
+- [x] Updates no android
+- [x] Deletes no android
 
 ## Links Importantes
 * (https://developer.android.com/training/data-storage/room/)
@@ -51,11 +67,39 @@ Neste projeto foi desenvolvida uma aplicação com, o objetivo de gerir as despe
 * (https://developer.android.com/guide/navigation/navigation-getting-started?hl=pt-br)
 * (https://www.mindrot.org/projects/jBCrypt/)
 * (https://www.tutsmake.com/laravel-9-google-pie-chart-tutorial-example/?utm_content=cmp-true)
-
+* (https://www.nicesnippets.com/blog/laravel-9-auth-scaffolding-using-bootstrap-laravel-ui)
+* (https://blog.devgenius.io/laravel-tutorial-3-views-and-blade-templates-dd432571512b)
+* (https://larainfo.com/blogs/laravel-9-rest-api-crud-tutorial-example)
+* (https://www.positronx.io/php-laravel-crud-operations-mysql-tutorial/)
+* (https://themewagon.com/themes/corona-free-responsive-bootstrap-4-admin-dashboard-template/)
 
 ## Links Importantes- Youtube
 * (https://www.youtube.com/watch?v=_DFF3OloS-4)
 * (https://www.youtube.com/watch?v=_DFF3OloS-4&t=1s)
+* (https://www.youtube.com/playlist?list=PLDc9bt_00KcKijBHJTbVsYagHeJC6X3YD)
+
+## End Points
+* Todos Movimentos
+(http://localhost:8000/api/movements)
+
+* Todas Categorias
+(http://localhost:8000/api/categories)
+
+* Todos Users
+(http://localhost:8000/api/users)
+
+* Todos Movimentos por user
+(http://localhost:8000/api/movements/{id})
+
+* Todas Categorias por user
+(http://localhost:8000/api/categories/{id})
+
+* Soma todas as Receitas por user
+(http://localhost:8000/api/movements/positive-sum/{id})
+
+* Soma todas as despesas por user
+(http://localhost:8000/api/movements/negative-sum/{id})
+
 
 ## Aplicações e Tecnologias
 * Android Studio 
@@ -63,3 +107,10 @@ Neste projeto foi desenvolvida uma aplicação com, o objetivo de gerir as despe
 * Retrofit
 * PieChart
 * JbCrypt
+* Html
+* Css
+* Javascript
+* Laravel
+* Xampp
+* Cmd
+
